@@ -163,7 +163,7 @@ def prepare_dataStore_operations():
     else:
         POST_Bodies["dataStores"] = replace_location_recursive(parse_files.dataStoresArt, "https://debian-pingfed:"
                                                                                           "9999", env_inject)
-    #Inject secrets into the POST bodies
+    #Inject secrets into the POST/PUT bodies
     for k in range(0, len(POST_Bodies["dataStores"])):
         if POST_Bodies["dataStores"][k]['id'] != "ProvisionerDS":
             POST_Bodies["dataStores"][k] = inject_secret_values(POST_Bodies["dataStores"][k], "encryptedPassword", "password",
@@ -192,6 +192,16 @@ def prepare_idpAdapter_operations():
                                                                 f"{parse_files.migrate_from}",
                                                                 env_inject
                                                                 )
+    for k in range(0, len(POST_Bodies["idpAdapters"])):
+        if POST_Bodies["idpAdapters"][k]['id'] != "ProvisionerDS":
+            POST_Bodies["idpAdapters"][k] = inject_secret_values(POST_Bodies["idpAdapters"][k], "encryptedValue",
+                                                                "value",
+                                                                parse_files.get_secret('intune-adapter-secret')
+                                                                ["intune-adapter-secret"])
+    for l in range(0, len(PUT_Bodies["idpAdapters"])):
+        PUT_Bodies["idpAdapters"][l] = inject_secret_values(PUT_Bodies["idpAdapters"][l], "encryptedValue", "value",
+                                                           parse_files.get_secret('intune-adapter-secret')
+                                                           ["intune-adapter-secret"])
 
 def prepare_authPolicyContract_operations():
     env_inject = parse_files.authPolicyContractsEnv['example']['location']
@@ -283,3 +293,4 @@ prepare_idpAdapter_operations()
 prepare_authPolicyContract_operations()
 prepare_authPolicy_operations()
 prepare_keyPair_operations()
+print('Bodies of PUT/POST have been completed.')

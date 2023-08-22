@@ -108,3 +108,4 @@ existingClients, existingAuthPols, existingIDPAdapters, existingSPConns, existin
     = call_existing_environment()
 
 pull_certs()
+print('File parsing has been completed.')
