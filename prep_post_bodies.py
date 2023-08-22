@@ -283,6 +283,7 @@ def inject_secret_values(d, old_key, new_key, new_value):
     else:
         return d
 
+parse_files.pull_certs()
 prepare_PCV_operations()
 prepare_SP_operations()
 prepare_client_operations()
