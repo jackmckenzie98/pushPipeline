@@ -108,4 +108,6 @@ existingClients, existingAuthPols, existingIDPAdapters, existingSPConns, existin
     = call_existing_environment()
 
 pull_certs()
+print(f'Testing existing clients\n\n {existingClients}\n\n\n')
+print(f'Output of clients artifact variable: \n\n {clientsArt}\n\n\n\n\n')
 print('File parsing has been completed.')
