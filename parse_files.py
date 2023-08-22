@@ -109,7 +109,6 @@ existingClients, existingAuthPols, existingIDPAdapters, existingSPConns, existin
 
 pull_certs()
 print('Working directory:   ' + os.getcwd() + '\n\nDirectory Contents:')
-print(os.listdir('./artifactsPull'))
-print(f'Testing existing clients\n\n {existingClients}\n\n\n')
-print(f'Output of clients artifact variable: \n\n {clientsArt}\n\n\n\n\n')
+print(f'Testing existing clients\n\n {existingAuthPols}\n\n\n')
+print(f'Output of auth policies artifact variable: \n\n {authPolsArt}\n\n\n\n\n')
 print('File parsing has been completed.')
