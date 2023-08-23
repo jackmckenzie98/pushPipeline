@@ -256,7 +256,7 @@ def prepare_authPolicy_operations():
 
 
 def prepare_authPolicyFragments_operations():
-    env_inject = parse_files.authPolFragmentsArt['example']['location']
+    env_inject = parse_files.authPolFragmentsEnv['example']['location']
     if len(parse_files.existingAuthPolFragments) > 0:
         for item in parse_files.authPolFragmentsArt:
             item = replace_location_recursive(item, f"{parse_files.migrate_from}", env_inject)
