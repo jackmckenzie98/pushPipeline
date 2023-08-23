@@ -10,7 +10,7 @@ import os
 migrate_to = os.environ.get('migrate_to')
 migrate_from = os.environ.get('migrate_from')
 file_path = os.getcwd()
-final_path = os.path.join(file_path, r'artifactsPull')
+final_path = os.path.join(file_path, r'artifactsToPush')
 cert_path = os.path.join(final_path, r'certs')
 #prepare a certs folder to import them in the push
 if not os.path.exists(cert_path):
@@ -51,17 +51,17 @@ def call_existing_environment():
         existing_dataStores, existing_keyPairs
 
 def ingest_artifacts():
-    clientsArt = json.load(open('./artifactsPull/clients.json'))
-    authPoliciesArt = json.load(open('./artifactsPull/authPolicies.json'))
-    authPolFragmentsArt = json.load(open('./artifactsPull/authenticationPolicyFragments.json'))
-    idpAdaptersArt = json.load(open('./artifactsPull/idpAdapters.json'))
-    spConnectionsArt = json.load(open('./artifactsPull/spConnections.json'))
-    passwordCredentialValidatorsArt = json.load(open('./artifactsPull/passwordCredentialValidators.json'))
-    accessTokenManagersArt = json.load(open('./artifactsPull/accessTokenManagers.json'))
-    accessTokenMappingsArt = json.load(open('./artifactsPull/accessTokenMappings.json'))
-    authPolicyContractsArt = json.load(open('./artifactsPull/authPolicyContracts.json'))
-    dataStoresArt = json.load(open('./artifactsPull/dataStores.json'))
-    keyPairsArt = json.load(open('./artifactsPull/keyPairs.json'))
+    clientsArt = json.load(open('./artifactsToPush/clients.json'))
+    authPoliciesArt = json.load(open('./artifactsToPush/authPolicies.json'))
+    authPolFragmentsArt = json.load(open('./artifactsToPush/authenticationPolicyFragments.json'))
+    idpAdaptersArt = json.load(open('./artifactsToPush/idpAdapters.json'))
+    spConnectionsArt = json.load(open('./artifactsToPush/spConnections.json'))
+    passwordCredentialValidatorsArt = json.load(open('./artifactsToPush/passwordCredentialValidators.json'))
+    accessTokenManagersArt = json.load(open('./artifactsToPush/accessTokenManagers.json'))
+    accessTokenMappingsArt = json.load(open('./artifactsToPush/accessTokenMappings.json'))
+    authPolicyContractsArt = json.load(open('./artifactsToPush/authPolicyContracts.json'))
+    dataStoresArt = json.load(open('./artifactsToPush/dataStores.json'))
+    keyPairsArt = json.load(open('./artifactsToPush/keyPairs.json'))
     return clientsArt, authPoliciesArt, authPolFragmentsArt, idpAdaptersArt, spConnectionsArt, passwordCredentialValidatorsArt, \
         accessTokenManagersArt, accessTokenMappingsArt, authPolicyContractsArt, dataStoresArt, keyPairsArt
 

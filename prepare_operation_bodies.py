@@ -275,7 +275,7 @@ def prepare_authPolicyFragments_operations():
 def prepare_keyPair_operations():
     cert_list = []
     file_path = os.getcwd()
-    final_path = os.path.join(file_path, r'artifactsPull')
+    final_path = os.path.join(file_path, r'artifactsToPush')
     cert_path = os.path.join(final_path, r'certs')
     encryption_pass = parse_files.get_secret('encryption-cert-pass')["encryptionPass"]
     for file in os.listdir(cert_path):
