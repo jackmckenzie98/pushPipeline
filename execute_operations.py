@@ -208,7 +208,7 @@ def execute_authentication_policy():
                             json=json_body)
             print(
                 f'Response Code for PUT to {url}/authenticationPolicies/default'
-                f' is {response.status_code} for call made with following JSON:\n {json_body}\n\n')
+                f' is {response.status_code} for call made with following JSON:\n {json.dumps(json_body,indent=2)}\n\n')
             print(f'Here is the content of the response:\n {response.content}\n\n')
 
 def execute_keypair_signing():
