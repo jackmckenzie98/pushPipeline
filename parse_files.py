@@ -68,7 +68,7 @@ def ingest_artifacts():
 def intake_env_files():
     clientsEnv = json.load(open('Env files/clients.json'))
     authPolEnv = json.load(open('Env files/authPolicies.json'))
-    authPolFragmentsEnv = json.load('Env files/authenticationPolicyFragments.json')
+    authPolFragmentsEnv = json.load(open('Env files/authenticationPolicyFragments.json'))
     idpAdaptersEnv = json.load(open('Env files/idpAdapters.json'))
     spConnEnv = json.load(open('Env files/spConnections.json'))
     PCVEnv = json.load(open('Env files/passwordCredentialValidators.json'))
