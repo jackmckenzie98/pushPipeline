@@ -257,18 +257,22 @@ def prepare_authPolicy_operations():
 
 def prepare_authPolicyFragments_operations():
     env_inject = parse_files.authPolFragmentsEnv['example']['location']
+    existing_ids = []
+    for i in range(0, len(parse_files.existingAuthPolFragments['items'])):
+        existing_ids.append(parse_files.existingAuthPolFragments['items'][i]['id'])
     if len(parse_files.existingAuthPolFragments) > 0:
-        for item in parse_files.authPolFragmentsArt:
+        for item in parse_files.authPolFragmentsArt['items']:
             item = replace_location_recursive(item, f"{parse_files.migrate_from}", env_inject)
-            if item not in parse_files.existingAuthPolFragments:
+            if item['id'] not in existing_ids:
                 POST_Bodies["authPolicyFragments"].append(item)
             else:
                 PUT_IDs["authPolicyFragments"].append(item["id"])
                 PUT_Bodies["authPolicyFragments"].append(item)
     else:
-        POST_Bodies["authPolicyFragments"] = replace_location_recursive(parse_files.authPolFragmentsArt,
+        POST_Bodies["authPolicyFragments"] = replace_location_recursive(parse_files.authPolFragmentsArt['items'],
                                                                         f"{parse_files.migrate_from}",
-                                                                        env_inject)
+                                                                        env_inject
+                                                                        )
 
 
 # Flesh this out
