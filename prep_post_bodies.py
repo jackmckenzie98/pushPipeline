@@ -237,6 +237,7 @@ def prepare_authPolicy_operations():
 def prepare_keyPair_operations():
     cert_list = []
     file_path = os.getcwd()
+    print(f"File path of current working directory: \n{file_path}")
     final_path = os.path.join(file_path, r'artifactsPull')
     cert_path = os.path.join(final_path, r'certs')
     print(f"Files in cert_path: \n{os.listdir(cert_path)}")
