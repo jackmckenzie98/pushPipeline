@@ -243,6 +243,7 @@ def prepare_keyPair_operations():
     for file in os.listdir(cert_path):
         with open(os.path.join(cert_path, file)) as f:
             cert_list.append(f.read())
+    print(cert_list)
     for i in range(0, len(parse_files.keyPairsArt['items'])):
         POST_Bodies["keyPairs"].append({"id": parse_files.keyPairsArt['items'][i]['id'],
                                        "fileData": "",
@@ -283,7 +284,6 @@ def inject_secret_values(d, old_key, new_key, new_value):
     else:
         return d
 
-parse_files.pull_certs()
 prepare_PCV_operations()
 prepare_SP_operations()
 prepare_client_operations()
