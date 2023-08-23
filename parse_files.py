@@ -111,4 +111,5 @@ existingClients, existingAuthPols, existingAuthPolFragments, existingIDPAdapters
     = call_existing_environment()
 
 pull_certs()
+print(json.dumps(existingAuthPols, indent=2))
 print('File parsing script has been completed')
