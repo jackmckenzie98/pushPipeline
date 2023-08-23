@@ -209,7 +209,7 @@ def execute_authentication_policy():
             print(
                 f'Response Code for PUT to {url}/authenticationPolicies/default'
                 f' is {response.status_code} for call made with following JSON:\n {json_body}\n\n')
-            print(f'Here is the content of the response:\n {json.dumps(json_body.json()}, indent=2)}\n\n')
+            print(f'Here is the content of the response:\n {json.dumps(json_body)}, indent=2)}\n\n')
 
 def execute_keypair_signing():
     if len(prep_post_bodies.POST_Bodies["keyPairs"]) > 0:
