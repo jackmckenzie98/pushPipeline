@@ -1,7 +1,7 @@
 import json
 import parse_files
 import requests
-import prep_post_bodies
+import prepare_operation_bodies
 import boto3
 
 url = f'{parse_files.migrate_to}/pf-admin-api/v1'

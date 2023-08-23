@@ -37,6 +37,7 @@ def call_existing_environment():
     session.verify = False
     existing_clients = session.get(f'{migrate_to}/pf-admin-api/v1/oauth/clients').json()
     existing_authPols = session.get(f'{migrate_to}/pf-admin-api/v1/authenticationPolicies/default').json()
+    existing_authPolFragments = session.get(f'{migrate_to}/pf-admin-api/v1/authenticationPolicies/fragments').json()
     existing_idpAdapters = session.get(f'{migrate_to}/pf-admin-api/v1/idp/adapters').json()
     existing_spConns = session.get(f'{migrate_to}/pf-admin-api/v1/idp/spConnections').json()
     existing_PCVs = session.get(f'{migrate_to}/pf-admin-api/v1/passwordCredentialValidators').json()
@@ -45,13 +46,14 @@ def call_existing_environment():
     existing_authPolicyContracts = session.get(f'{migrate_to}/pf-admin-api/v1/authenticationPolicyContracts').json()
     existing_dataStores = session.get(f'{migrate_to}/pf-admin-api/v1/dataStores').json()
     existing_keyPairs = session.get(f'{migrate_to}/pf-admin-api/v1/keyPairs/signing').json()
-    return existing_clients, existing_authPols, existing_idpAdapters, existing_spConns, existing_PCVs, \
+    return existing_clients, existing_authPols, existing_authPolFragments, existing_idpAdapters, existing_spConns, existing_PCVs, \
         existing_accessTokenManagers, existing_accessTokenMappings, existing_authPolicyContracts, \
         existing_dataStores, existing_keyPairs
 
 def ingest_artifacts():
     clientsArt = json.load(open('./artifactsPull/clients.json'))
     authPoliciesArt = json.load(open('./artifactsPull/authPolicies.json'))
+    authPolFragmentsArt = json.load(open('./artifactsPull/authenticationPolicyFragments.json'))
     idpAdaptersArt = json.load(open('./artifactsPull/idpAdapters.json'))
     spConnectionsArt = json.load(open('./artifactsPull/spConnections.json'))
     passwordCredentialValidatorsArt = json.load(open('./artifactsPull/passwordCredentialValidators.json'))
@@ -60,12 +62,13 @@ def ingest_artifacts():
     authPolicyContractsArt = json.load(open('./artifactsPull/authPolicyContracts.json'))
     dataStoresArt = json.load(open('./artifactsPull/dataStores.json'))
     keyPairsArt = json.load(open('./artifactsPull/keyPairs.json'))
-    return clientsArt, authPoliciesArt, idpAdaptersArt, spConnectionsArt, passwordCredentialValidatorsArt, \
+    return clientsArt, authPoliciesArt, authPolFragmentsArt, idpAdaptersArt, spConnectionsArt, passwordCredentialValidatorsArt, \
         accessTokenManagersArt, accessTokenMappingsArt, authPolicyContractsArt, dataStoresArt, keyPairsArt
 
 def intake_env_files():
     clientsEnv = json.load(open('Env files/clients.json'))
     authPolEnv = json.load(open('Env files/authPolicies.json'))
+    authPolFragmentsEnv = json.load('Env files/authenticationPolicyFragments.json')
     idpAdaptersEnv = json.load(open('Env files/idpAdapters.json'))
     spConnEnv = json.load(open('Env files/spConnections.json'))
     PCVEnv = json.load(open('Env files/passwordCredentialValidators.json'))
@@ -73,7 +76,7 @@ def intake_env_files():
     accessTokenMappingsEnv = json.load(open('Env files/accessTokenMappings.json'))
     authPolicyContractsEnv = json.load(open('Env files/authPolicyContracts.json'))
     dataStoresEnv = json.load(open('Env files/dataStores.json'))
-    return clientsEnv, authPolEnv, idpAdaptersEnv, spConnEnv, PCVEnv, accessTokenManagersEnv,\
+    return clientsEnv, authPolEnv, authPolFragmentsEnv, idpAdaptersEnv, spConnEnv, PCVEnv, accessTokenManagersEnv,\
         accessTokenMappingsEnv, authPolicyContractsEnv, dataStoresEnv
 
 def pull_certs():
@@ -97,13 +100,13 @@ def pull_certs():
         f.close()
 
 
-clientsArt, authPolsArt, idpAdaptersArt, spConnsArt, passwordCredentialValidatorsArt, accessTokenManagersArt, \
+clientsArt, authPolsArt, authPolFragmentsArt, idpAdaptersArt, spConnsArt, passwordCredentialValidatorsArt, accessTokenManagersArt, \
     accessTokenMappingsArt, authPolicyContractsArt, dataStoresArt, keyPairsArt = ingest_artifacts()
 
-clientsEnv, authPolsEnv, idpAdaptersEnv, spConnEnv, PCVEnv, accessTokenManagersEnv, accessTokenMappingsEnv, \
+clientsEnv, authPolsEnv, authPolFragmentsEnv, idpAdaptersEnv, spConnEnv, PCVEnv, accessTokenManagersEnv, accessTokenMappingsEnv, \
     authPolicyContractsEnv, dataStoresEnv = intake_env_files()
 
-existingClients, existingAuthPols, existingIDPAdapters, existingSPConns, existingPCVs, existingAccessTokenManagers,\
+existingClients, existingAuthPols, existingAuthPolFragments, existingIDPAdapters, existingSPConns, existingPCVs, existingAccessTokenManagers,\
     existingAccessTokenMappings, existing_authPolicyContracts, existingDataStores, existingKeyPairs\
     = call_existing_environment()
 
