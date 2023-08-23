@@ -239,8 +239,7 @@ def prepare_keyPair_operations():
     file_path = os.getcwd()
     final_path = os.path.join(file_path, r'artifactsPull')
     cert_path = os.path.join(final_path, r'certs')
-    print(cert_path)
-    print('Reached keyPair ops function')
+    print(f"Files in cert_path: \n{os.listdir(cert_path)}")
     encryption_pass = parse_files.get_secret('encryption-cert-pass')["encryptionPass"]
     for file in os.listdir(cert_path):
         with open(os.path.join(cert_path, file)) as f:
