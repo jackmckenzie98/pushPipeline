@@ -93,7 +93,7 @@ def pull_certs():
     for id in cert_ids:
         json_body = {"password": f"{encryption_pass}"}
         response = session.post(f'{migrate_from}/pf-admin-api/v1/keyPairs/signing/{id}/pem', json=json_body)
-        f = open(f"{final_path}\\certs\\{id}.pem", 'w+')
+        f = open(f"{cert_path}/{id}.pem", 'w+')
         print(f'\n\n\n{response.text}\n\n\n')
         f.write(response.text)
         f.close()
