@@ -237,11 +237,8 @@ def prepare_authPolicy_operations():
 def prepare_keyPair_operations():
     cert_list = []
     file_path = os.getcwd()
-    print(f"Files in path of current working directory: \n{os.listdir(file_path)}")
     final_path = os.path.join(file_path, r'artifactsPull')
-    print(f"\n\n\nFiles in path of artifactsPull directory: \n {os.listdir(final_path)}")
     cert_path = os.path.join(final_path, r'certs')
-    print(f"\n\n\nFiles in cert_path: \n{os.listdir(cert_path)}")
     encryption_pass = parse_files.get_secret('encryption-cert-pass')["encryptionPass"]
     for file in os.listdir(cert_path):
         with open(os.path.join(cert_path, file)) as f:
@@ -296,3 +293,5 @@ prepare_authPolicyContract_operations()
 prepare_authPolicy_operations()
 prepare_keyPair_operations()
 print('Bodies of PUT/POST have been completed.')
+print(f'\n\n\nPOST Bodies object are as follows: \n\n\n{json.dumps(POST_Bodies, indent=2)}\n\n\n')
+print(f'PUTs look like this: \n\n\n {json.dumps(PUT_Bodies,indent=2)}\n\n\n')
