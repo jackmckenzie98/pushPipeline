@@ -240,7 +240,7 @@ def prepare_keyPair_operations():
     final_path = os.path.join(file_path, r'artifactsPull')
     cert_path = os.path.join(final_path, r'certs')
     print(cert_path)
-    print(cert_list)
+    print('Reached keyPair ops function')
     encryption_pass = parse_files.get_secret('encryption-cert-pass')["encryptionPass"]
     for file in os.listdir(cert_path):
         with open(os.path.join(cert_path, file)) as f:
@@ -252,7 +252,6 @@ def prepare_keyPair_operations():
                                        "password": f"{encryption_pass}"
                                         })
         POST_Bodies["keyPairs"][i]["fileData"] = cert_list[i]
-    print(POST_Bodies["keyPairs"])
 
 
 def replace_location_recursive(data, target_substring, replacement):

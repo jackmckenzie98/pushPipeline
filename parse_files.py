@@ -108,7 +108,4 @@ existingClients, existingAuthPols, existingIDPAdapters, existingSPConns, existin
     = call_existing_environment()
 
 pull_certs()
-print('Working directory:   ' + os.getcwd() + '\n\nDirectory Contents:')
-print(f'Testing existing clients\n\n {existingAuthPols}\n\n\n')
-print(f'Output of auth policies artifact variable: \n\n {idpAdaptersArt}\n\n\n\n\n')
-print('File parsing has been completed.')
+print('File parsing script has been completed')
