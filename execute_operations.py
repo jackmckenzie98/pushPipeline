@@ -224,6 +224,26 @@ def execute_keypair_signing():
             )
             print(f'Here is the response\'s content: \n {response.content}\n\n')
 
+def execute_authentication_policy_fragments():
+    for i in range(0, len(prepare_operation_bodies.POST_Bodies["authPolicyFragments"])):
+        print('Running POST Calls on Authentication Policy Fragments...\n\n')
+        json_body = json.loads(json.dumps(prepare_operation_bodies.POST_Bodies["authPolicyFragments"][i]))
+        response = \
+            session.post(url=f'{url}/authenticationPolicies/fragments', json=json_body)
+        print(f'Response Code for POST is {response.status_code} for call made with following JSON:\n {json_body}\n\n')
+        print(f'Here is the content of the response:\n {response.content}\n\n')
+    if len(prepare_operation_bodies.PUT_IDs["authPolicyFragments"]) > 0:
+        for j in range(0, len(prepare_operation_bodies.PUT_IDs["authPolicyFragments"])):
+            print('Running PUT Calls on Authentication Policy Fragments(update)...\n\n')
+            json_body = json.loads(json.dumps(prepare_operation_bodies.PUT_Bodies["authPolicyFragments"][j]))
+            response = \
+                session.put(url=f'{url}/authenticationPolicies/fragments/{prepare_operation_bodies.PUT_IDs["authPolicyFragments"][j]}',
+                            json=json_body)
+            print(
+                f'Response Code for PUT to {url}/authenticationPolicies/fragments/{prepare_operation_bodies.PUT_IDs["authPolicyFragments"][j]}'
+                f' is {response.status_code} for call made with following JSON:\n {json_body}\n\n')
+            print(f'Here is the content of the response:\n {response.content}\n\n')
+
 
 execute_keypair_signing()
 execute_idp_adapters()
@@ -234,6 +254,7 @@ execute_clients()
 execute_password_credential_validators()
 execute_authentication_policy_contracts()
 execute_sp_connections()
+execute_authentication_policy_fragments()
 execute_authentication_policy()
 
 
