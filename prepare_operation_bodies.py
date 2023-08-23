@@ -246,10 +246,6 @@ def prepare_authPolicyContract_operations():
 # This probably needs evaluation as the POST/PUTs for authn policies are a bit weird.
 def prepare_authPolicy_operations():
     env_inject = parse_files.authPolsEnv['example']['location']
-    existing_ids = []
-    for i in range(0, len(parse_files.existingAuthPols['authnSelectionTrees'])):
-        existing_ids.append(parse_files.existingAuthPols['authnSelectionTrees'][i]['rootNode']["action"]
-                            ["authenticationSource"]["sourceRef"]["id"])
     POST_Bodies["authPolicies"].append(replace_location_recursive(parse_files.authPolsArt,
                                                                   f"{parse_files.migrate_from}",
                                                                   env_inject))

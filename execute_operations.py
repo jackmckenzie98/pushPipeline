@@ -29,62 +29,62 @@ session.verify = False
 
 
 def execute_idp_adapters():
-    for i in range(0, len(prep_post_bodies.POST_Bodies["idpAdapters"])):
+    for i in range(0, len(prepare_operation_bodies.POST_Bodies["idpAdapters"])):
         print('Running POST Calls on IDP adapters...\n\n')
-        json_body = json.loads(json.dumps(prep_post_bodies.POST_Bodies["idpAdapters"][i]))
+        json_body = json.loads(json.dumps(prepare_operation_bodies.POST_Bodies["idpAdapters"][i]))
         response = \
             session.post(url=f'{url}/idp/adapters', json=json_body)
         print(f'Response Code for POST is {response.status_code} for call made with following JSON:\n {json_body}\n\n')
         print(f'Here is the content of the response:\n {response.content}\n\n')
-    if len(prep_post_bodies.PUT_IDs["idpAdapters"]) > 0:
-        for j in range(0, len(prep_post_bodies.PUT_IDs["idpAdapters"])):
+    if len(prepare_operation_bodies.PUT_IDs["idpAdapters"]) > 0:
+        for j in range(0, len(prepare_operation_bodies.PUT_IDs["idpAdapters"])):
             print('Running PUT Calls on IDP Adapters(update)...\n\n')
-            json_body = json.loads(json.dumps(prep_post_bodies.PUT_Bodies["idpAdapters"][j]))
+            json_body = json.loads(json.dumps(prepare_operation_bodies.PUT_Bodies["idpAdapters"][j]))
             response = \
-                session.put(url=f'{url}/idp/adapters/{prep_post_bodies.PUT_IDs["idpAdapters"][j]}', json=json_body)
-            print(f'Response Code for PUT to {url}/idp/adapters/{prep_post_bodies.PUT_IDs["idpAdapters"][j]}'
+                session.put(url=f'{url}/idp/adapters/{prepare_operation_bodies.PUT_IDs["idpAdapters"][j]}', json=json_body)
+            print(f'Response Code for PUT to {url}/idp/adapters/{prepare_operation_bodies.PUT_IDs["idpAdapters"][j]}'
                   f' is {response.status_code} for call made with following JSON:\n {json_body}\n\n')
             print(f'Here is the content of the response:\n {response.content}\n\n')
 
 
 def execute_access_token_managers():
-    for i in range(0, len(prep_post_bodies.POST_Bodies["accessTokenManagers"])):
+    for i in range(0, len(prepare_operation_bodies.POST_Bodies["accessTokenManagers"])):
         print('Running POST Calls on Access Token Managers...\n\n')
-        json_body = json.loads(json.dumps(prep_post_bodies.POST_Bodies["accessTokenManagers"][i]))
+        json_body = json.loads(json.dumps(prepare_operation_bodies.POST_Bodies["accessTokenManagers"][i]))
         response = \
             session.post(url=f'{url}/oauth/accessTokenManagers', json=json_body)
         print(f'Response Code for POST is {response.status_code} for call made with following JSON:\n {json_body}\n\n')
         print(f'Here is the content of the response:\n {response.content}\n\n')
-    if len(prep_post_bodies.PUT_IDs["accessTokenManagers"]) > 0:
-        for j in range(0, len(prep_post_bodies.PUT_IDs["accessTokenManagers"])):
+    if len(prepare_operation_bodies.PUT_IDs["accessTokenManagers"]) > 0:
+        for j in range(0, len(prepare_operation_bodies.PUT_IDs["accessTokenManagers"])):
             print('Running PUT Calls on Access Token Managers(update)...\n\n')
-            json_body = json.loads(json.dumps(prep_post_bodies.PUT_Bodies["accessTokenManagers"][j]))
+            json_body = json.loads(json.dumps(prepare_operation_bodies.PUT_Bodies["accessTokenManagers"][j]))
             response = \
-                session.put(url=f'{url}/oauth/accessTokenManagers/{prep_post_bodies.PUT_IDs["accessTokenManagers"][j]}',
+                session.put(url=f'{url}/oauth/accessTokenManagers/{prepare_operation_bodies.PUT_IDs["accessTokenManagers"][j]}',
                             json=json_body)
             print(
-                f'Response Code for PUT to {url}/oauth/accessTokenManagers/{prep_post_bodies.PUT_IDs["accessTokenManagers"][j]}'
+                f'Response Code for PUT to {url}/oauth/accessTokenManagers/{prepare_operation_bodies.PUT_IDs["accessTokenManagers"][j]}'
                 f' is {response.status_code} for call made with following JSON:\n {json_body}\n\n')
             print(f'Here is the content of the response:\n {response.content}\n\n')
 
 
 def execute_access_token_mappings():
-    for i in range(0, len(prep_post_bodies.POST_Bodies["accessTokenMappings"])):
+    for i in range(0, len(prepare_operation_bodies.POST_Bodies["accessTokenMappings"])):
         print('Running POST Calls on Access Token Mappings...\n\n')
-        json_body = json.loads(json.dumps(prep_post_bodies.POST_Bodies["accessTokenMappings"][i]))
+        json_body = json.loads(json.dumps(prepare_operation_bodies.POST_Bodies["accessTokenMappings"][i]))
         response = \
             session.post(url=f'{url}/oauth/accessTokenMappings', json=json_body)
         print(f'Response Code for POST is {response.status_code} for call made with following JSON:\n {json_body}\n\n')
         print(f'Here is the content of the response:\n {response.content}\n\n')
-    if len(prep_post_bodies.PUT_IDs["accessTokenMappings"]) > 0:
-        for j in range(0, len(prep_post_bodies.PUT_IDs["accessTokenMappings"])):
+    if len(prepare_operation_bodies.PUT_IDs["accessTokenMappings"]) > 0:
+        for j in range(0, len(prepare_operation_bodies.PUT_IDs["accessTokenMappings"])):
             print('Running PUT Calls on Access Token Mappings(update)...\n\n')
-            json_body = json.loads(json.dumps(prep_post_bodies.PUT_Bodies["accessTokenMappings"][j]))
+            json_body = json.loads(json.dumps(prepare_operation_bodies.PUT_Bodies["accessTokenMappings"][j]))
             response = \
-                session.put(url=f'{url}/oauth/accessTokenMappings/{prep_post_bodies.PUT_IDs["accessTokenMappings"][j]}',
+                session.put(url=f'{url}/oauth/accessTokenMappings/{prepare_operation_bodies.PUT_IDs["accessTokenMappings"][j]}',
                             json=json_body)
             print(
-                f'Response Code for PUT to {url}/oauth/accessTokenMappings/{prep_post_bodies.PUT_IDs["accessTokenMappings"][j]}'
+                f'Response Code for PUT to {url}/oauth/accessTokenMappings/{prepare_operation_bodies.PUT_IDs["accessTokenMappings"][j]}'
                 f' is {response.status_code} for call made with following JSON:\n {json_body}\n\n')
             print(f'Here is the content of the response:\n {response.content}\n\n')
 
@@ -93,116 +93,116 @@ def execute_access_token_mappings():
 # value as the key, and the value of the encryptedValue JSON field with the actual password value to inject properly
 # programmatically.
 def execute_data_stores():
-    for i in range(0, len(prep_post_bodies.POST_Bodies["dataStores"])):
+    for i in range(0, len(prepare_operation_bodies.POST_Bodies["dataStores"])):
         print('Running POST Calls on Data Stores...\n\n')
-        json_body = json.loads(json.dumps(prep_post_bodies.POST_Bodies["dataStores"][i]))
+        json_body = json.loads(json.dumps(prepare_operation_bodies.POST_Bodies["dataStores"][i]))
         response = \
             session.post(url=f'{url}/dataStores', json=json_body)
         print(f'Response Code for POST is {response.status_code} for call made with following JSON:\n {json_body}\n\n')
         print(f'Here is the content of the response:\n {response.content}\n\n')
-    if len(prep_post_bodies.PUT_IDs["dataStores"]) > 0:
-        for j in range(0, len(prep_post_bodies.PUT_IDs["dataStores"])):
+    if len(prepare_operation_bodies.PUT_IDs["dataStores"]) > 0:
+        for j in range(0, len(prepare_operation_bodies.PUT_IDs["dataStores"])):
             print('Running PUT Calls on Data Stores(update)...\n\n')
-            json_body = json.loads(json.dumps(prep_post_bodies.PUT_Bodies["dataStores"][j]))
+            json_body = json.loads(json.dumps(prepare_operation_bodies.PUT_Bodies["dataStores"][j]))
             response = \
-                session.put(url=f'{url}/dataStores/{prep_post_bodies.PUT_IDs["dataStores"][j]}', json=json_body)
-            print(f'Response Code for PUT to {url}/dataStores/{prep_post_bodies.PUT_IDs["dataStores"][j]}'
+                session.put(url=f'{url}/dataStores/{prepare_operation_bodies.PUT_IDs["dataStores"][j]}', json=json_body)
+            print(f'Response Code for PUT to {url}/dataStores/{prepare_operation_bodies.PUT_IDs["dataStores"][j]}'
                   f' is {response.status_code} for call made with following JSON:\n {json_body}\n\n')
             print(f'Here is the content of the response:\n {response.content}\n\n')
 
 
 def execute_clients():
-    for i in range(0, len(prep_post_bodies.POST_Bodies["clients"])):
+    for i in range(0, len(prepare_operation_bodies.POST_Bodies["clients"])):
         print('Running POST Calls on OAuth Clients...\n\n')
-        json_body = json.loads(json.dumps(prep_post_bodies.POST_Bodies["clients"][i]))
+        json_body = json.loads(json.dumps(prepare_operation_bodies.POST_Bodies["clients"][i]))
         response = \
             session.post(url=f'{url}/oauth/clients', json=json_body)
         print(f'Response Code for POST is {response.status_code} for call made with following JSON:\n {json_body}\n\n')
         print(f'Here is the content of the response:\n {response.content}\n\n')
-    if len(prep_post_bodies.PUT_IDs["clients"]) > 0:
-        for j in range(0, len(prep_post_bodies.PUT_IDs["clients"])):
+    if len(prepare_operation_bodies.PUT_IDs["clients"]) > 0:
+        for j in range(0, len(prepare_operation_bodies.PUT_IDs["clients"])):
             print('Running PUT Calls on Access Token Mappings(update)...\n\n')
-            json_body = json.loads(json.dumps(prep_post_bodies.PUT_Bodies["clients"][j]))
+            json_body = json.loads(json.dumps(prepare_operation_bodies.PUT_Bodies["clients"][j]))
             response = \
-                session.put(url=f'{url}/oauth/clients/{prep_post_bodies.PUT_IDs["clients"][j]}',
+                session.put(url=f'{url}/oauth/clients/{prepare_operation_bodies.PUT_IDs["clients"][j]}',
                             json=json_body)
             print(
-                f'Response Code for PUT to {url}/oauth/clients/{prep_post_bodies.PUT_IDs["clients"][j]}'
+                f'Response Code for PUT to {url}/oauth/clients/{prepare_operation_bodies.PUT_IDs["clients"][j]}'
                 f' is {response.status_code} for call made with following JSON:\n {json_body}\n\n')
             print(f'Here is the content of the response:\n {response.content}\n\n')
 
 
 def execute_password_credential_validators():
-    for i in range(0, len(prep_post_bodies.POST_Bodies["passwordCredentialValidators"])):
+    for i in range(0, len(prepare_operation_bodies.POST_Bodies["passwordCredentialValidators"])):
         print('Running POST Calls on PCVs...\n\n')
-        json_body = json.loads(json.dumps(prep_post_bodies.POST_Bodies["passwordCredentialValidators"][i]))
+        json_body = json.loads(json.dumps(prepare_operation_bodies.POST_Bodies["passwordCredentialValidators"][i]))
         response = \
             session.post(url=f'{url}/passwordCredentialValidators', json=json_body)
         print(f'Response Code for POST is {response.status_code} for call made with following JSON:\n {json_body}\n\n')
         print(f'Here is the content of the response:\n {response.content}\n\n')
-    if len(prep_post_bodies.PUT_IDs["passwordCredentialValidators"]) > 0:
-        for j in range(0, len(prep_post_bodies.PUT_IDs["passwordCredentialValidators"])):
+    if len(prepare_operation_bodies.PUT_IDs["passwordCredentialValidators"]) > 0:
+        for j in range(0, len(prepare_operation_bodies.PUT_IDs["passwordCredentialValidators"])):
             print('Running PUT Calls on Password Credential Validators(update)...\n\n')
-            json_body = json.loads(json.dumps(prep_post_bodies.PUT_Bodies["passwordCredentialValidators"][j]))
+            json_body = json.loads(json.dumps(prepare_operation_bodies.PUT_Bodies["passwordCredentialValidators"][j]))
             response = \
                 session.put(
-                    url=f'{url}/passwordCredentialValidators/{prep_post_bodies.PUT_IDs["passwordCredentialValidators"][j]}',
+                    url=f'{url}/passwordCredentialValidators/{prepare_operation_bodies.PUT_IDs["passwordCredentialValidators"][j]}',
                     json=json_body)
             print(
-                f'Response Code for PUT to {url}/passwordCredentialValidators/{prep_post_bodies.PUT_IDs["passwordCredentialValidators"][j]}'
+                f'Response Code for PUT to {url}/passwordCredentialValidators/{prepare_operation_bodies.PUT_IDs["passwordCredentialValidators"][j]}'
                 f' is {response.status_code} for call made with following JSON:\n {json_body}\n\n')
             print(f'Here is the content of the response:\n {response.content}\n\n')
 
 def execute_authentication_policy_contracts():
-    for i in range(0, len(prep_post_bodies.POST_Bodies["authPolicyContracts"])):
+    for i in range(0, len(prepare_operation_bodies.POST_Bodies["authPolicyContracts"])):
         print('Running POST Calls on Auth Policy Contracts...\n\n')
-        json_body = json.loads(json.dumps(prep_post_bodies.POST_Bodies["authPolicyContracts"][i]))
+        json_body = json.loads(json.dumps(prepare_operation_bodies.POST_Bodies["authPolicyContracts"][i]))
         response = \
             session.post(url=f'{url}/authenticationPolicyContracts', json=json_body)
         print(f'Response Code for POST is {response.status_code} for call made with following JSON:\n {json_body}\n\n')
         print(f'Here is the content of the response:\n {response.content}\n\n')
-    if len(prep_post_bodies.PUT_IDs["authPolicyContracts"]) > 0:
-        for j in range(0, len(prep_post_bodies.PUT_IDs["authPolicyContracts"])):
+    if len(prepare_operation_bodies.PUT_IDs["authPolicyContracts"]) > 0:
+        for j in range(0, len(prepare_operation_bodies.PUT_IDs["authPolicyContracts"])):
             print('Running PUT Calls on Auth Policy Contracts (update)...\n\n')
-            json_body = json.loads(json.dumps(prep_post_bodies.PUT_Bodies["authPolicyContracts"][j]))
+            json_body = json.loads(json.dumps(prepare_operation_bodies.PUT_Bodies["authPolicyContracts"][j]))
             response = \
-                session.put(url=f'{url}/authenticationPolicyContracts/{prep_post_bodies.PUT_IDs["authPolicyContracts"][j]}', json=json_body)
-            print(f'Response Code for PUT to {url}/authenticationPolicyContracts/{prep_post_bodies.PUT_IDs["authPolicyContracts"][j]}'
+                session.put(url=f'{url}/authenticationPolicyContracts/{prepare_operation_bodies.PUT_IDs["authPolicyContracts"][j]}', json=json_body)
+            print(f'Response Code for PUT to {url}/authenticationPolicyContracts/{prepare_operation_bodies.PUT_IDs["authPolicyContracts"][j]}'
                   f' is {response.status_code} for call made with following JSON:\n {json_body}\n\n')
             print(f'Here is the content of the response:\n {response.content}\n\n')
 
 def execute_sp_connections():
-    for i in range(0, len(prep_post_bodies.POST_Bodies["spConnections"])):
+    for i in range(0, len(prepare_operation_bodies.POST_Bodies["spConnections"])):
         print('Running POST Calls on SP Connections...\n\n')
-        json_body = json.loads(json.dumps(prep_post_bodies.POST_Bodies["spConnections"][i]))
+        json_body = json.loads(json.dumps(prepare_operation_bodies.POST_Bodies["spConnections"][i]))
         response = \
             session.post(url=f'{url}/idp/spConnections', json=json_body)
         print(f'Response Code for POST is {response.status_code} for call made with following JSON:\n {json_body}\n\n')
         print(f'Here is the content of the response:\n {response.content}\n\n')
-    if len(prep_post_bodies.PUT_IDs["spConnections"]) > 0:
-        for j in range(0, len(prep_post_bodies.PUT_IDs["spConnections"])):
+    if len(prepare_operation_bodies.PUT_IDs["spConnections"]) > 0:
+        for j in range(0, len(prepare_operation_bodies.PUT_IDs["spConnections"])):
             print('Running PUT Calls on SP Connections(update)...\n\n')
-            json_body = json.loads(json.dumps(prep_post_bodies.PUT_Bodies["spConnections"][j]))
+            json_body = json.loads(json.dumps(prepare_operation_bodies.PUT_Bodies["spConnections"][j]))
             response = \
-                session.put(url=f'{url}/idp/spConnections/{prep_post_bodies.PUT_IDs["spConnections"][j]}',
+                session.put(url=f'{url}/idp/spConnections/{prepare_operation_bodies.PUT_IDs["spConnections"][j]}',
                             json=json_body)
             print(
-                f'Response Code for PUT to {url}/idp/spConnections/{prep_post_bodies.PUT_IDs["spConnections"][j]}'
+                f'Response Code for PUT to {url}/idp/spConnections/{prepare_operation_bodies.PUT_IDs["spConnections"][j]}'
                 f' is {response.status_code} for call made with following JSON:\n {json_body}\n\n')
             print(f'Here is the content of the response:\n {response.content}\n\n')
 
 def execute_authentication_policy():
-    #for i in range(0, len(prep_post_bodies.POST_Bodies["authPolicies"])):
+    #for i in range(0, len(prepare_operation_bodies.POST_Bodies["authPolicies"])):
     #    print("Running POST Calls on Auth Policies")
-    #    json_body = json.loads(json.dumps(prep_post_bodies.POST_Bodies["authPolicies"][i]))
+    #    json_body = json.loads(json.dumps(prepare_operation_bodies.POST_Bodies["authPolicies"][i]))
     #    response = \
     #        session.post(url=f'{url}/authenticationPolicies/default', json=json_body)
     #    print(f'Response Code for POST is {response.status_code} for call made with following JSON:\n {json_body}\n\n')
     #    print(f'Here is the content of the response:\n {response.content}\n\n')
-    if len(prep_post_bodies.POST_Bodies["authPolicies"]) > 0:
-        for j in range(0, len(prep_post_bodies.POST_Bodies["authPolicies"])):
+    if len(prepare_operation_bodies.POST_Bodies["authPolicies"]) > 0:
+        for j in range(0, len(prepare_operation_bodies.POST_Bodies["authPolicies"])):
             print('Running PUT Calls on Auth Policies(update)...\n\n')
-            json_body = json.loads(json.dumps(prep_post_bodies.POST_Bodies["authPolicies"][j]))
+            json_body = json.loads(json.dumps(prepare_operation_bodies.POST_Bodies["authPolicies"][j]))
             response = \
                 session.put(url=f'{url}/authenticationPolicies/default',
                             json=json_body)
@@ -212,14 +212,14 @@ def execute_authentication_policy():
             print(f'Here is the content of the response:\n {response.content}\n\n')
 
 def execute_keypair_signing():
-    if len(prep_post_bodies.POST_Bodies["keyPairs"]) > 0:
-        for i in range(0, len(prep_post_bodies.POST_Bodies["keyPairs"])):
+    if len(prepare_operation_bodies.POST_Bodies["keyPairs"]) > 0:
+        for i in range(0, len(prepare_operation_bodies.POST_Bodies["keyPairs"])):
             print("Importing Key Pair Certs...\n\n")
-            json_body = json.loads(json.dumps(prep_post_bodies.POST_Bodies["keyPairs"][i]))
+            json_body = json.loads(json.dumps(prepare_operation_bodies.POST_Bodies["keyPairs"][i]))
             response = session.post(url=f'{url}/keyPairs/signing/import',
                                     json=json_body)
             print(
-                f'Response Code for POST of Key Pair with ID {prep_post_bodies.POST_Bodies["keyPairs"][i]["id"]}'
+                f'Response Code for POST of Key Pair with ID {prepare_operation_bodies.POST_Bodies["keyPairs"][i]["id"]}'
                 f'is {response.status_code}'
             )
             print(f'Here is the response\'s content: \n {response.content}\n\n')
