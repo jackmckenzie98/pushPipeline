@@ -110,5 +110,6 @@ existingClients, existingAuthPols, existingAuthPolFragments, existingIDPAdapters
     existingAccessTokenMappings, existing_authPolicyContracts, existingDataStores, existingKeyPairs\
     = call_existing_environment()
 
-pull_certs()
-print('File parsing script has been completed')
+if __name__ == '__main__':
+    pull_certs()
+    print('File parsing script has been completed')
