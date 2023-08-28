@@ -3,8 +3,9 @@ import parse_files
 import requests
 import prepare_operation_bodies
 import boto3
+import os
 
-url = f'{parse_files.migrate_to}/pf-admin-api/v1'
+url = f'{parse_files.MIGRATE_TO}/pf-admin-api/v1'
 
 
 def get_secret(secret_name):
@@ -22,7 +23,7 @@ def get_secret(secret_name):
 
 
 session = requests.Session()
-secrets = get_secret('debian-pf-api-secret')
+secrets = get_secret(os.environ.get('API_Secret'))
 session.auth = (secrets["username"], secrets["pass"])
 session.headers.update({'X-XSRF-Header': 'PingFederate'})
 session.verify = False

@@ -39,247 +39,12 @@ POST_Bodies = {"dataStores": [],
                "keyPairs": []
                }
 
-
-def prepare_SP_operations():
-    env_inject = parse_files.spConnEnv['example']['location']
-    existing_ids = []
-    for i in range(0, len(parse_files.existingSPConns['items'])):
-        existing_ids.append(parse_files.existingSPConns['items'][i]['entityId'])
-
-    if len(parse_files.existingSPConns) > 0:
-        for item in parse_files.spConnsArt.values():
-            for list_item in item:
-                list_item = replace_location_recursive(list_item, f"{parse_files.migrate_from}", env_inject)
-                # If the artifact is not in the existing configuration, we will add it to the creation list(objects to be created)
-                if list_item['entityId'] not in existing_ids:
-                    POST_Bodies["spConnections"].append(list_item)
-                # Otherwise, means it exists in the configuration already, and we will store the ID for a PUT operation
-                else:
-                    PUT_IDs["spConnections"].append(list_item["id"])
-                    PUT_Bodies["spConnections"].append(list_item)
-    else:
-        POST_Bodies["spConnections"] = replace_location_recursive(parse_files.spConnsArt['items'],
-                                                                  f"{parse_files.migrate_from}",
-                                                                  env_inject)
-
-
-def prepare_PCV_operations():
-    env_inject = parse_files.PCVEnv['example']['location']
-    existing_ids = []
-    for i in range(0, len(parse_files.existingPCVs['items'])):
-        existing_ids.append(parse_files.existingPCVs['items'][i]['id'])
-
-    if len(parse_files.existingPCVs) > 0:
-        for item in parse_files.passwordCredentialValidatorsArt.values():
-            for list_item in item:
-                list_item = replace_location_recursive(list_item, parse_files.migrate_from, env_inject)
-                if list_item['id'] not in existing_ids:
-                    POST_Bodies["passwordCredentialValidators"].append(list_item)
-                else:
-                    PUT_IDs["passwordCredentialValidators"].append(list_item["id"])
-                    PUT_Bodies["passwordCredentialValidators"].append(list_item)
-    else:
-        POST_Bodies["passwordCredentialValidators"] = replace_location_recursive(
-            parse_files.passwordCredentialValidatorsArt['items'], f"{parse_files.migrate_from}", env_inject)
-
-    for k in range(0, len(POST_Bodies["passwordCredentialValidators"])):
-        if POST_Bodies["passwordCredentialValidators"][k]['id'] != "ProvisionerDS":
-            POST_Bodies["passwordCredentialValidators"][k] = inject_secret_values(
-                POST_Bodies["passwordCredentialValidators"][k], "encryptedValue",
-                "value",
-                parse_files.get_secret('PCVPass')
-                ["PCVPass"])
-
-    for l in range(0, len(PUT_Bodies["passwordCredentialValidators"])):
-        PUT_Bodies["passwordCredentialValidators"][l] = inject_secret_values(
-            PUT_Bodies["passwordCredentialValidators"][l], "encryptedValue", "value",
-            parse_files.get_secret('PCVPass')
-            ["PCVPass"])
-
-
-# this needs fixed to check for existence properly
-def prepare_client_operations():
-    existing_ids = []
-    env_inject = parse_files.clientsEnv['example']['location']
-    # Get a list of client IDs that exist to determine whether it will be PUT or POST
-    for i in range(0, len(parse_files.existingClients['items'])):
-        existing_ids.append(parse_files.existingClients['items'][i]['clientId'])
-
-    if len(parse_files.existingClients['items']) > 0:
-        for i in range(0, len(parse_files.clientsArt['items'])):
-            new_body = replace_location_recursive(parse_files.clientsArt['items'][i], f"{parse_files.migrate_from}",
-                                                  env_inject)
-            if new_body['clientId'] not in existing_ids:
-                POST_Bodies["clients"].append(new_body)
-            else:
-                PUT_IDs["clients"].append(new_body["clientId"])
-                PUT_Bodies["clients"].append(new_body)
-    else:
-        POST_Bodies["clients"] = replace_location_recursive(parse_files.clientsArt['items'], "https://debian-"
-                                                                                             "pingfed:9999", env_inject)
-
-
-def prepare_accessTokenManager_operations():
-    env_inject = parse_files.accessTokenManagersEnv['example']['location']
-    # Get the existing IDs to see if it already exists and thus will take a PUT instead of POST
-    existing_ids = []
-    for i in range(0, len(parse_files.existingAccessTokenManagers['items'])):
-        existing_ids.append(parse_files.existingAccessTokenManagers['items'][i]['id'])
-
-    if len(parse_files.existingAccessTokenManagers['items']) > 0:
-        for item in parse_files.accessTokenManagersArt.values():
-            for list_item in item:
-                list_item = replace_location_recursive(list_item, f"{parse_files.migrate_from}", env_inject)
-                if list_item['id'] not in existing_ids:
-                    POST_Bodies["accessTokenManagers"].append(list_item)
-                else:
-                    PUT_IDs["accessTokenManagers"].append(list_item["id"])
-                    PUT_Bodies["accessTokenManagers"].append(list_item)
-    else:
-        POST_Bodies["accessTokenManagers"] = replace_location_recursive(parse_files.accessTokenManagersArt['items'],
-                                                                        f"{parse_files.migrate_from}", env_inject)
-
-
-def prepare_accessTokenMappings_operations():
-    env_inject = parse_files.accessTokenMappingsEnv['example']['location']
-    if len(parse_files.existingAccessTokenMappings) > 0:
-        for item in parse_files.accessTokenMappingsArt:
-            item = replace_location_recursive(item, f"{parse_files.migrate_from}", env_inject)
-            if item not in parse_files.existingAccessTokenMappings:
-                POST_Bodies["accessTokenMappings"].append(item)
-            else:
-                PUT_IDs["accessTokenMappings"].append(item["id"])
-                PUT_Bodies["accessTokenMappings"].append(item)
-    else:
-        POST_Bodies["accessTokenMappings"] = replace_location_recursive(parse_files.accessTokenMappingsArt,
-                                                                        f"{parse_files.migrate_from}",
-                                                                        env_inject)
-
-
-def prepare_dataStore_operations():
-    env_inject = parse_files.dataStoresEnv['example']['location']
-    existing_ids = []
-    for i in range(0, len(parse_files.existingDataStores['items'])):
-        existing_ids.append(parse_files.existingDataStores['items'][i]['id'])
-    if len(existing_ids) > 0:
-        for j in range(0, len(parse_files.dataStoresArt['items'])):
-            if parse_files.dataStoresArt['items'][j]['id'] not in existing_ids:
-                new_body = replace_location_recursive(parse_files.dataStoresArt["items"][j],
-                                                      f"{parse_files.migrate_from}",
-                                                      env_inject
-                                                      )
-                POST_Bodies["dataStores"].append(new_body)
-            # Ignore default DB, don't touch it
-            elif parse_files.dataStoresArt['items'][j]['id'] != "ProvisionerDS":
-                new_body = replace_location_recursive(parse_files.dataStoresArt['items'][j],
-                                                      f"{parse_files.migrate_from}",
-                                                      env_inject
-                                                      )
-                PUT_Bodies["dataStores"].append(new_body)
-                PUT_IDs["dataStores"].append(new_body['id'])
-    else:
-        POST_Bodies["dataStores"] = replace_location_recursive(parse_files.dataStoresArt, "https://debian-pingfed:"
-                                                                                          "9999", env_inject)
-    # Inject secrets into the POST/PUT bodies
-    for k in range(0, len(POST_Bodies["dataStores"])):
-        if POST_Bodies["dataStores"][k]['id'] != "ProvisionerDS":
-            POST_Bodies["dataStores"][k] = inject_secret_values(POST_Bodies["dataStores"][k], "encryptedPassword",
-                                                                "password",
-                                                                parse_files.get_secret('PCVPass')
-                                                                ["PCVPass"])
-    for l in range(0, len(PUT_Bodies["dataStores"])):
-        PUT_Bodies["dataStores"][l] = inject_secret_values(PUT_Bodies["dataStores"][l], "encryptedPassword", "password",
-                                                           parse_files.get_secret('PCVPass')
-                                                           ["PCVPass"])
-
-
-def prepare_idpAdapter_operations():
-    env_inject = parse_files.idpAdaptersEnv['example']['location']
-    existing_ids = []
-    for i in range(0, len(parse_files.existingIDPAdapters['items'])):
-        existing_ids.append(parse_files.existingIDPAdapters['items'][i]['id'])
-    if len(parse_files.existingIDPAdapters) > 0:
-        for item in parse_files.idpAdaptersArt['items']:
-            item = replace_location_recursive(item, f"{parse_files.migrate_from}", env_inject)
-            if item['id'] not in existing_ids:
-                POST_Bodies["idpAdapters"].append(item)
-            else:
-                PUT_IDs["idpAdapters"].append(item["id"])
-                PUT_Bodies["idpAdapters"].append(item)
-    else:
-        POST_Bodies["idpAdapters"] = replace_location_recursive(parse_files.idpAdaptersArt['items'],
-                                                                f"{parse_files.migrate_from}",
-                                                                env_inject
-                                                                )
-    for k in range(0, len(POST_Bodies["idpAdapters"])):
-        if POST_Bodies["idpAdapters"][k]['id'] != "ProvisionerDS":
-            POST_Bodies["idpAdapters"][k] = inject_secret_values(POST_Bodies["idpAdapters"][k], "encryptedValue",
-                                                                 "value",
-                                                                 parse_files.get_secret('intune-adapter-secret')
-                                                                 ["intune-adapter-secret"])
-    for l in range(0, len(PUT_Bodies["idpAdapters"])):
-        PUT_Bodies["idpAdapters"][l] = inject_secret_values(PUT_Bodies["idpAdapters"][l], "encryptedValue", "value",
-                                                            parse_files.get_secret('intune-adapter-secret')
-                                                            ["intune-adapter-secret"])
-
-
-def prepare_authPolicyContract_operations():
-    env_inject = parse_files.authPolicyContractsEnv['example']['location']
-    existing_ids = []
-    for i in range(0, len(parse_files.existing_authPolicyContracts['items'])):
-        existing_ids.append(parse_files.existing_authPolicyContracts['items'][i]['id'])
-    if len(parse_files.existing_authPolicyContracts) > 0:
-        for item in parse_files.authPolicyContractsArt['items']:
-            item = replace_location_recursive(item, f"{parse_files.migrate_from}", env_inject)
-            if item['id'] not in existing_ids:
-                POST_Bodies["authPolicyContracts"].append(item)
-            else:
-                PUT_IDs["authPolicyContracts"].append(item["id"])
-                PUT_Bodies["authPolicyContracts"].append(item)
-    else:
-        POST_Bodies["authPolicyContracts"] = replace_location_recursive(parse_files.authPolicyContractsArt['items'],
-                                                                        f"{parse_files.migrate_from}",
-                                                                        env_inject
-                                                                        )
-
-
-# This probably needs evaluation as the POST/PUTs for authn policies are a bit weird.
-def prepare_authPolicy_operations():
-    env_inject = parse_files.authPolsEnv['example']['location']
-    POST_Bodies["authPolicies"].append(replace_location_recursive(parse_files.authPolsArt,
-                                                                  f"{parse_files.migrate_from}",
-                                                                  env_inject))
-
-
-def prepare_authPolicyFragments_operations():
-    env_inject = parse_files.authPolFragmentsEnv['example']['location']
-    existing_ids = []
-    for i in range(0, len(parse_files.existingAuthPolFragments['items'])):
-        existing_ids.append(parse_files.existingAuthPolFragments['items'][i]['id'])
-    if len(parse_files.existingAuthPolFragments) > 0:
-        for item in parse_files.authPolFragmentsArt['items']:
-            item = replace_location_recursive(item, f"{parse_files.migrate_from}", env_inject)
-            if item['id'] not in existing_ids:
-                POST_Bodies["authPolicyFragments"].append(item)
-            else:
-                PUT_IDs["authPolicyFragments"].append(item["id"])
-                PUT_Bodies["authPolicyFragments"].append(item)
-    else:
-        POST_Bodies["authPolicyFragments"] = replace_location_recursive(parse_files.authPolFragmentsArt['items'],
-                                                                        f"{parse_files.migrate_from}",
-                                                                        env_inject
-                                                                        )
-
-
-# Flesh this out
+#Special case to format the key pair operations as they won't exist at first
 def prepare_keyPair_operations():
     cert_list = []
-    file_path = os.getcwd()
-    final_path = os.path.join(file_path, r'artifactsToPush')
-    cert_path = os.path.join(final_path, r'certs')
-    encryption_pass = parse_files.get_secret('encryption-cert-pass')["encryptionPass"]
-    for file in os.listdir(cert_path):
-        with open(os.path.join(cert_path, file)) as f:
+    encryption_pass = parse_files.get_secret(os.environ.get('ENCRYPTION_PASS_NAME'))["encryptionPass"]
+    for file in os.listdir(parse_files.CERT_FILES):
+        with open(os.path.join(parse_files.CERT_FILES, file)) as f:
             cert_list.append(f.read())
     for i in range(0, len(parse_files.keyPairsArt['items'])):
         POST_Bodies["keyPairs"].append({"id": parse_files.keyPairsArt['items'][i]['id'],
@@ -321,16 +86,80 @@ def inject_secret_values(d, old_key, new_key, new_value):
     else:
         return d
 
+def prepare_operations(entity_type, existing_data, art_data, id_key, data_key, secret_key=None):
+    if data_key != 'authPolicies':
+        env_inject = entity_type['example']['location']
+        existing_ids = {item[id_key] for item in existing_data['items']}
 
-prepare_PCV_operations()
-prepare_SP_operations()
-prepare_client_operations()
-prepare_accessTokenManager_operations()
-prepare_accessTokenMappings_operations()
-prepare_dataStore_operations()
-prepare_idpAdapter_operations()
-prepare_authPolicyContract_operations()
-prepare_authPolicyFragments_operations()
-prepare_authPolicy_operations()
+        for item in art_data['items']:
+            item = replace_location_recursive(item, parse_files.MIGRATE_FROM, env_inject)
+            if item[id_key] not in existing_ids:
+                POST_Bodies[data_key].append(item)
+            else:
+                PUT_IDs[data_key].append(item[id_key])
+                PUT_Bodies[data_key].append(item)
+        if secret_key is not None:
+            for i in range(len(POST_Bodies[data_key])):
+                if POST_Bodies[data_key][i][id_key] != "ProvisionerDS":
+                    POST_Bodies[data_key][i] = inject_secret_values(POST_Bodies[data_key][i], "encryptedValue", "value",
+                                                                    parse_files.get_secret(secret_key)[secret_key])
+            for j in range(len(PUT_Bodies[data_key])):
+                PUT_Bodies[data_key][j] = inject_secret_values(PUT_Bodies[data_key][j], "encryptedValue", "value",
+                                                              parse_files.get_secret(secret_key)[secret_key])
+
+    # Handle the case that we're PUT-ing the auth policy since its object is a bit unique.
+    else:
+        env_inject = entity_type['example']['location']
+        for item in art_data['items']:
+            item = replace_location_recursive(item, parse_files.MIGRATE_FROM, env_inject)
+            POST_Bodies[data_key].append(item)
+        if secret_key is not None:
+            for i in range(len(POST_Bodies[data_key])):
+                if POST_Bodies[data_key][i][id_key] != "ProvisionerDS":
+                    POST_Bodies[data_key][i] = inject_secret_values(POST_Bodies[data_key][i], "encryptedValue", "value",
+                                                                    parse_files.get_secret(secret_key)[secret_key])
+            for j in range(len(PUT_Bodies[data_key])):
+                PUT_Bodies[data_key][j] = inject_secret_values(PUT_Bodies[data_key][j], "encryptedValue", "value",
+                                                               parse_files.get_secret(secret_key)[secret_key])
+
+# Prepare the PCV data structures
+prepare_operations(parse_files.PCVEnv, parse_files.existingPCVs, parse_files.passwordCredentialValidatorsArt, 'id',
+                   'passwordCredentialValidators', 'PCVPass')
+
+# Prepare the SP connections data structures
+prepare_operations(parse_files.spConnEnv, parse_files.existingSPConns, parse_files.spConnsArt, 'id', 'spConnections')
+
+# Prepare clients data structures
+prepare_operations(parse_files.clientsEnv, parse_files.existingClients, parse_files.clientsArt, 'clientId', 'clients')
+
+# Prepare Access Token Manager structures
+prepare_operations(parse_files.accessTokenManagersEnv, parse_files.existingAccessTokenManagers,
+                   parse_files.accessTokenManagersArt, 'id', 'accessTokenManagers')
+
+# Prepare Access Token Mappings structures
+prepare_operations(parse_files.accessTokenMappingsEnv, parse_files.existingAccessTokenMappings,
+                   parse_files.accessTokenMappingsArt, 'id', 'accessTokenMappings')
+
+# Prepare Data Store Operations structures
+prepare_operations(parse_files.dataStoresEnv, parse_files.existingDataStores, parse_files.dataStoresArt, 'id',
+                   'dataStores', 'PCVPass')
+
+# Prepare IDP Adapters structures
+prepare_operations(parse_files.idpAdaptersEnv, parse_files.existingIDPAdapters, parse_files.idpAdaptersArt, 'id',
+                   'idpAdapters')
+
+# Prepare Auth Policy Contracts structures
+prepare_operations(parse_files.authPolicyContractsEnv, parse_files.existing_authPolicyContracts,
+                   parse_files.authPolicyContractsArt, 'id', 'authPolicyContracts')
+
+# Prepare Auth Policy Fragments structures
+prepare_operations(parse_files.authPolFragmentsEnv, parse_files.existingAuthPolFragments,
+                   parse_files.authPolFragmentsArt, 'id', 'authPolicyFragments')
+
+# Prepare Authentication Policies structures
+prepare_operations(parse_files.authPolsEnv, parse_files.existingAuthPols, parse_files.authPolsArt,
+                   'id', 'authPolicies')
+
+#Last one needs some evaluation
 prepare_keyPair_operations()
 print('Body formatting of PUT/POST operations on objects has been completed.')
