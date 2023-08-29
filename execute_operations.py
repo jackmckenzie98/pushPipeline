@@ -23,7 +23,7 @@ def get_secret(secret_name):
 
 
 session = requests.Session()
-secrets = get_secret(os.environ.get('API_Secret'))
+secrets = get_secret(os.environ.get('API_SECRET'))
 session.auth = (secrets["username"], secrets["pass"])
 session.headers.update({'X-XSRF-Header': 'PingFederate'})
 session.verify = False
