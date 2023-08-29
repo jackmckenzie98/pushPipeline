@@ -6,7 +6,17 @@ import boto3
 import os
 
 url = f'{parse_files.MIGRATE_TO}/pf-admin-api/v1'
-
+endpoints = {"dataStores": "/dataStores",
+             "accessTokenManagers": "/oauth/accessTokenManagers",
+             "accessTokenMappings": "/oauth/accessTokenMappings",
+             "authPolicies": "/authenticationPolicies/default",
+             "authPolicyFragments": "/authenticationPolicies/fragments",
+             "authPolicyContracts": "/authenticationPolicyContracts",
+             "idpAdapters": "/idp/adapters",
+             "passwordCredentialValidators": "/passwordCredentialValidators",
+             "spConnections": "/idp/spConnections",
+             "clients": "/oauth/clients",
+             "keyPairs": "/keyPairs/signing"}
 
 def get_secret(secret_name):
     region_name = "us-east-1"
@@ -245,6 +255,31 @@ def execute_authentication_policy_fragments():
                 f' is {response.status_code} for call made with following JSON:\n {json_body}\n\n')
             print(f'Here is the content of the response:\n {response.content}\n\n')
 
+def execute_calls():
+    #Execute the POST calls
+    for key, val in prepare_operation_bodies.POST_Bodies.items():
+        for i in range(0, len(prepare_operation_bodies.POST_Bodies[key])):
+            json_body = json.loads(json.dumps(prepare_operation_bodies.POST_Bodies[key][i]))
+            response = session.post(url=f'{url}{endpoints[key]}', json=json_body)
+            print(f'Response code for POST to {url}{endpoints[key]} is {response.status_code} for call'
+                  f' made with following JSON:\n {json_body}\n\n')
+            print(f'Response body is as follows:\n {response.content}')
+
+    for key, val in prepare_operation_bodies.PUT_Bodies.items():
+        if key != 'authPolicies':
+            for i in range(0, len(prepare_operation_bodies.PUT_Bodies[key])):
+                json_body = json.loads(json.dumps(prepare_operation_bodies.PUT_Bodies[key][i]))
+                response = session.put(url=f'{url}{endpoints[key]}/{prepare_operation_bodies.PUT_IDs[key][i]}',
+                                       json=json_body)
+                print(f'Response code for PUT to {url}{endpoints[key]}/{prepare_operation_bodies.PUT_IDs[key][i]} is '
+                      f'{response.status_code} with the following JSON:\n {json_body}\n\n')
+                print(f'Response body is as follows:\n {response.content}\n')
+        else:
+            json_body = json.loads(json.dumps(prepare_operation_bodies.PUT_Bodies[key][i]))
+            response = session.put(url=f'{url}{endpoints[key]}/default', json=json_body)
+            print(f'Response code for PUT to {url}{endpoints[key]} is'
+                  f' {response.status_code} with the following JSON:\n {json_body}\n\n')
+            print(f'Response body is as follows:\n {response.content}\n')
 
 execute_keypair_signing()
 execute_idp_adapters()
@@ -257,5 +292,6 @@ execute_authentication_policy_contracts()
 execute_sp_connections()
 execute_authentication_policy_fragments()
 execute_authentication_policy()
+execute_calls()
 
 print('\n\n\n\nOperations Completed.  Migration Complete!\n\n\n\n')

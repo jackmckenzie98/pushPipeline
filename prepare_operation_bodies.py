@@ -112,7 +112,7 @@ def prepare_operations(entity_type, existing_data, art_data, id_key, data_key, s
         env_inject = entity_type['example']['location']
         for item in art_data['items']:
             item = replace_location_recursive(item, parse_files.MIGRATE_FROM, env_inject)
-            POST_Bodies[data_key].append(item)
+            PUT_Bodies[data_key].append(item)
         if secret_key is not None:
             for i in range(len(POST_Bodies[data_key])):
                 if POST_Bodies[data_key][i][id_key] != "ProvisionerDS":

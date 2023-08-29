@@ -1,0 +1,46 @@
+{
+  "oauthClients":
+  {
+    "endpoint": "/oauth/clients"
+  },
+  "idpAdapters":
+  {
+    "endpoint": "/idp/adapters"
+  },
+  "authPolicies":
+  {
+    "endpoint": "/authenticationPolicies/default"
+  },
+  "authenticationPolicyFragments":
+  {
+    "endpoint": "/authenticationPolicies/fragments"
+  },
+  "spConnections":
+  {
+    "endpoint": "/idp/spConnections"
+  },
+  "passwordCredentialValidators":
+  {
+    "endpoint": "/passwordCredentialValidators"
+  },
+  "accessTokenManagers":
+  {
+	  "endpoint": "/oauth/accessTokenManagers"
+  },
+  "accessTokenMappings":
+  {
+	  "endpoint": "/oauth/accessTokenMappings"
+  },
+  "authPolicyContracts":
+  {
+	  "endpoint": "/authenticationPolicyContracts"
+  },
+  "dataStores":
+  {
+	  "endpoint": "/dataStores"
+  },
+  "keyPairs":
+  {
+    "endpoint": "/keyPairs/signing"
+  }
+}
