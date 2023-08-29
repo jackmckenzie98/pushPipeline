@@ -210,10 +210,10 @@ def execute_authentication_policy():
     #        session.post(url=f'{url}/authenticationPolicies/default', json=json_body)
     #    print(f'Response Code for POST is {response.status_code} for call made with following JSON:\n {json_body}\n\n')
     #    print(f'Here is the content of the response:\n {response.content}\n\n')
-    if len(prepare_operation_bodies.POST_Bodies["authPolicies"]) > 0:
-        for j in range(0, len(prepare_operation_bodies.POST_Bodies["authPolicies"])):
+    if len(prepare_operation_bodies.PUT_Bodies["authPolicies"]) > 0:
+        for j in range(0, len(prepare_operation_bodies.PUT_Bodies["authPolicies"])):
             print('Running PUT Calls on Auth Policies(update)...\n\n')
-            json_body = json.loads(json.dumps(prepare_operation_bodies.POST_Bodies["authPolicies"][j]))
+            json_body = json.loads(json.dumps(prepare_operation_bodies.PUT_Bodies["authPolicies"][j]))
             response = \
                 session.put(url=f'{url}/authenticationPolicies/default',
                             json=json_body)
@@ -256,16 +256,16 @@ def execute_authentication_policy_fragments():
             print(f'Here is the content of the response:\n {response.content}\n\n')
 
 def execute_calls():
-    #Execute the POST calls
-    for key, val in prepare_operation_bodies.POST_Bodies.items():
+    #PUTs and POSTs have the same key values in the same order, so we can iterate this way
+    for key, val in prepare_operation_bodies.PUT_Bodies.items():
+        #Run POST operations then PUTs
+        print(f'Operations running now on {key}...\n')
         for i in range(0, len(prepare_operation_bodies.POST_Bodies[key])):
             json_body = json.loads(json.dumps(prepare_operation_bodies.POST_Bodies[key][i]))
             response = session.post(url=f'{url}{endpoints[key]}', json=json_body)
             print(f'Response code for POST to {url}{endpoints[key]} is {response.status_code} for call'
                   f' made with following JSON:\n {json_body}\n\n')
             print(f'Response body is as follows:\n {response.content}')
-
-    for key, val in prepare_operation_bodies.PUT_Bodies.items():
         if key != 'authPolicies':
             for i in range(0, len(prepare_operation_bodies.PUT_Bodies[key])):
                 json_body = json.loads(json.dumps(prepare_operation_bodies.PUT_Bodies[key][i]))
@@ -275,23 +275,24 @@ def execute_calls():
                       f'{response.status_code} with the following JSON:\n {json_body}\n\n')
                 print(f'Response body is as follows:\n {response.content}\n')
         else:
-            json_body = json.loads(json.dumps(prepare_operation_bodies.PUT_Bodies[key][i]))
-            response = session.put(url=f'{url}{endpoints[key]}/default', json=json_body)
-            print(f'Response code for PUT to {url}{endpoints[key]} is'
-                  f' {response.status_code} with the following JSON:\n {json_body}\n\n')
-            print(f'Response body is as follows:\n {response.content}\n')
+            for j in range(0, len(prepare_operation_bodies.PUT_Bodies[key])):
+                json_body = json.loads(json.dumps(prepare_operation_bodies.PUT_Bodies[key][j]))
+                response = session.put(url=f'{url}{endpoints[key]}', json=json_body)
+                print(f'Response code for PUT to {url}{endpoints[key]} is'
+                      f' {response.status_code} with the following JSON:\n {json_body}\n\n')
+                print(f'Response body is as follows:\n {response.content}\n')
 
-execute_keypair_signing()
-execute_idp_adapters()
-execute_access_token_managers()
-execute_access_token_mappings()
-execute_data_stores()
-execute_clients()
-execute_password_credential_validators()
-execute_authentication_policy_contracts()
-execute_sp_connections()
-execute_authentication_policy_fragments()
-execute_authentication_policy()
+#execute_keypair_signing()
+#execute_idp_adapters()
+#execute_access_token_managers()
+#execute_access_token_mappings()
+#execute_data_stores()
+#execute_clients()
+#execute_password_credential_validators()
+#execute_authentication_policy_contracts()
+#execute_sp_connections()
+#execute_authentication_policy_fragments()
+#execute_authentication_policy()
 execute_calls()
 
 print('\n\n\n\nOperations Completed.  Migration Complete!\n\n\n\n')
