@@ -259,7 +259,7 @@ def execute_calls():
     #PUTs and POSTs have the same key values in the same order, so we can iterate this way
     for key, val in prepare_operation_bodies.PUT_Bodies.items():
         #Run POST operations then PUTs
-        print(f'Operations running now on {key}...\n')
+        print(f'\n\n\n\nOperations running now on {key}...\n')
         for i in range(0, len(prepare_operation_bodies.POST_Bodies[key])):
             json_body = json.loads(json.dumps(prepare_operation_bodies.POST_Bodies[key][i]))
             response = session.post(url=f'{url}{endpoints[key]}', json=json_body)
