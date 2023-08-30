@@ -71,20 +71,15 @@ def replace_location_recursive(data, target_substring, replacement):
 
 def inject_secret_values(d, old_key, new_key, new_value):
     if isinstance(d, dict):
-        new_dict = {}
+        new_data = {}
         for key, value in d.items():
-            if isinstance(value, (dict, list)):
-                new_dict[key] = inject_secret_values(value, old_key, new_key, new_value)
-            elif key == old_key:
-                new_dict[new_key] = new_value
+            if key == old_key:
+                new_data[new_key] = new_value
             else:
-                new_dict[key] = value
-        return new_dict
+                new_data[key] = inject_secret_values(value, old_key, new_key, new_value)
+        return new_data
     elif isinstance(d, list):
-        new_list = []
-        for item in d:
-            new_list.append(inject_secret_values(item, old_key, new_key, new_value))
-        return new_list
+        return [inject_secret_values(item, old_key, new_key, new_value) for item in d]
     else:
         return d
 
