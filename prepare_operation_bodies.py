@@ -142,7 +142,7 @@ prepare_operations(parse_files.accessTokenMappingsEnv, parse_files.existingAcces
 
 # Prepare Data Store Operations structures
 prepare_operations(parse_files.dataStoresEnv, parse_files.existingDataStores, parse_files.dataStoresArt, 'id',
-                   'dataStores', 'PCVPass')
+                   'dataStores', os.environ.get('PCV_PASS'))
 
 # Prepare IDP Adapters structures
 prepare_operations(parse_files.idpAdaptersEnv, parse_files.existingIDPAdapters, parse_files.idpAdaptersArt, 'id',
