@@ -109,7 +109,7 @@ def prepare_operations(entity_type, existing_data, art_data, id_key, data_key, s
                 PUT_Bodies[data_key][j] = inject_secret_values(PUT_Bodies[data_key][j], "encryptedValue", "value",
                                                               parse_files.get_secret(secret_key)[secret_key])
                 if data_key == "passwordCredentialValidators":
-                    print(PUT_Bodies[data_key][j])
+                    print(f'\n\n\nDEBUG!!: {PUT_Bodies[data_key][j]}\n\n\n')
                 PUT_Bodies[data_key][j] = inject_secret_values(PUT_Bodies[data_key][j], "encryptedPassword", "password",
                                                               parse_files.get_secret(secret_key)[secret_key])
 
