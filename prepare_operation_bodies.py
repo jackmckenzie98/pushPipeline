@@ -75,6 +75,8 @@ def inject_secret_values(d, old_key, new_key, new_value):
         for key, value in d.items():
             if isinstance(value, dict):
                 new_dict[key] = inject_secret_values(value, old_key, new_key, new_value)
+            elif isinstance(value, list):
+                new_dict[key] = [inject_secret_values(item, old_key, new_key, new_value) for item in value]
             elif key == old_key:
                 new_dict[new_key] = new_value
             else:
