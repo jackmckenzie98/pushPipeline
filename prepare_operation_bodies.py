@@ -98,7 +98,9 @@ def prepare_operations(entity_type, existing_data, art_data, id_key, data_key, s
             else:
                 PUT_IDs[data_key].append(item[id_key])
                 PUT_Bodies[data_key].append(item)
-
+    if data_key == 'passwordCredentialValidators':
+        print(POST_Bodies[data_key])
+        print(PUT_Bodies[data_key])
         # If the body requires a secret to be injected to PUT/POST
         if secret_key is not None:
             for i in range(len(POST_Bodies[data_key])):
