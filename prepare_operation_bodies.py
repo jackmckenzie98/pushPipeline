@@ -112,9 +112,10 @@ def prepare_operations(entity_type, existing_data, art_data, id_key, data_key, s
         for j in range(len(PUT_Bodies[data_key])):
             PUT_Bodies[data_key][j] = inject_secret_values(PUT_Bodies[data_key][j], "encryptedValue", "value",
                                                           parse_files.get_secret(secret_key)[secret_key])
-            print(f'\n\n{PUT_Bodies[data_key][j]}')
             PUT_Bodies[data_key][j] = inject_secret_values(PUT_Bodies[data_key][j], "encryptedPassword", "password",
                                                           parse_files.get_secret(secret_key)[secret_key])
+    if data_key == 'passwordCredentialValidators':
+        print(f'\n\nAFTER INJECTION: {PUT_Bodies[data_key]}')
 
     # Handle the case that we're PUT-ing the auth policy since its object is a bit unique.
     else:
