@@ -16,7 +16,7 @@ endpoints = {"dataStores": "/dataStores",
              "passwordCredentialValidators": "/passwordCredentialValidators",
              "spConnections": "/idp/spConnections",
              "clients": "/oauth/clients",
-             "keyPairs": "/keyPairs/signing"}
+             "keyPairs": "/keyPairs/signing/import"}
 
 def get_secret(secret_name):
     region_name = "us-east-1"

@@ -106,12 +106,12 @@ def prepare_operations(entity_type, existing_data, art_data, id_key, data_key, s
                     POST_Bodies[data_key][i] = inject_secret_values(POST_Bodies[data_key][i], "encryptedValue", "value",
                                                                     parse_files.get_secret(secret_key)[secret_key])
                     POST_Bodies[data_key][i] = inject_secret_values(PUT_Bodies[data_key][i], "encryptedPassword",
-                                                                   "value",
+                                                                   "Password",
                                                                    parse_files.get_secret(secret_key)[secret_key])
             for j in range(len(PUT_Bodies[data_key])):
                 PUT_Bodies[data_key][j] = inject_secret_values(PUT_Bodies[data_key][j], "encryptedValue", "value",
                                                               parse_files.get_secret(secret_key)[secret_key])
-                PUT_Bodies[data_key][j] = inject_secret_values(PUT_Bodies[data_key][j], "encryptedPassword", "value",
+                PUT_Bodies[data_key][j] = inject_secret_values(PUT_Bodies[data_key][j], "encryptedPassword", "Password",
                                                               parse_files.get_secret(secret_key)[secret_key])
 
     # Handle the case that we're PUT-ing the auth policy since its object is a bit unique.
