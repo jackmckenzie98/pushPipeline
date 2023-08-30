@@ -108,8 +108,6 @@ def prepare_operations(entity_type, existing_data, art_data, id_key, data_key, s
             for j in range(len(PUT_Bodies[data_key])):
                 PUT_Bodies[data_key][j] = inject_secret_values(PUT_Bodies[data_key][j], "encryptedValue", "value",
                                                               parse_files.get_secret(secret_key)[secret_key])
-                if data_key == "passwordCredentialValidators":
-                    print(f'\n\n\nDEBUG!!: {PUT_Bodies[data_key][j]}\n\n\n')
                 PUT_Bodies[data_key][j] = inject_secret_values(PUT_Bodies[data_key][j], "encryptedPassword", "password",
                                                               parse_files.get_secret(secret_key)[secret_key])
 
@@ -129,16 +127,13 @@ def prepare_operations(entity_type, existing_data, art_data, id_key, data_key, s
                                                                parse_files.get_secret(secret_key)[secret_key])
 
 
-# Prepare the SP connections data structures
-prepare_operations(parse_files.spConnEnv, parse_files.existingSPConns, parse_files.spConnsArt, 'id', 'spConnections')
-
-print(f'BEFORE PREP_OPERATIONS:\n\n{PUT_Bodies["passwordCredentialValidators"]}')
-print(f'\n\n{POST_Bodies["passwordCredentialValidators"]}')
 # Prepare the PCV data structures
 prepare_operations(parse_files.PCVEnv, parse_files.existingPCVs, parse_files.passwordCredentialValidatorsArt, "id",
                    "passwordCredentialValidators", os.environ.get("PCV_PASS"))
-print(f'AFTER PREP_OPERATIONS:\n\n{PUT_Bodies["passwordCredentialValidators"]}')
-print(f'\n\n{POST_Bodies["passwordCredentialValidators"]}')
+
+# Prepare the SP connections data structures
+prepare_operations(parse_files.spConnEnv, parse_files.existingSPConns, parse_files.spConnsArt, 'id', 'spConnections')
+
 # Prepare clients data structures
 prepare_operations(parse_files.clientsEnv, parse_files.existingClients, parse_files.clientsArt, 'clientId', 'clients')
 
