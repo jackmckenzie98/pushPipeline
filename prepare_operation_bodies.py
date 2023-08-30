@@ -124,7 +124,7 @@ def prepare_operations(entity_type, existing_data, art_data, id_key, data_key, s
 
 # Prepare the PCV data structures
 prepare_operations(parse_files.PCVEnv, parse_files.existingPCVs, parse_files.passwordCredentialValidatorsArt, 'id',
-                   'passwordCredentialValidators', 'PCVPass')
+                   'passwordCredentialValidators', os.environ.get('PCV_PASS'))
 
 # Prepare the SP connections data structures
 prepare_operations(parse_files.spConnEnv, parse_files.existingSPConns, parse_files.spConnsArt, 'id', 'spConnections')
