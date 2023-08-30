@@ -70,16 +70,21 @@ def replace_location_recursive(data, target_substring, replacement):
 
 
 def inject_secret_values(d, old_key, new_key, new_value):
+    keys_to_replace = []
+
     if isinstance(d, dict):
         for key, value in d.items():
-            if isinstance(value, dict) or isinstance(value, list):
+            if isinstance(value, (dict, list)):
                 inject_secret_values(value, old_key, new_key, new_value)
             elif key == old_key:
-                d[new_key] = new_value
-                del d[old_key]
+                keys_to_replace.append(key)
     elif isinstance(d, list):
         for item in d:
             inject_secret_values(item, old_key, new_key, new_value)
+
+    for key in keys_to_replace:
+        d[new_key] = new_value
+        del d[old_key]
 
 def prepare_operations(entity_type, existing_data, art_data, id_key, data_key, secret_key=None):
     if data_key != 'authPolicies':
