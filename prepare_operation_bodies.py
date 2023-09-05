@@ -187,12 +187,17 @@ prepare_operations(parse_files.authPolFragmentsEnv, parse_files.existingAuthPolF
 prepare_operations(parse_files.authPolsEnv, parse_files.existingAuthPols, parse_files.authPolsArt,
                    'id', 'authPolicies')
 
+# Prepare Authentication Sessions structures
+prepare_operations(parse_files.authSessionsEnv, parse_files.existingAuthSessions, parse_files.authSessionsArt,
+                   'id', 'authSessions')
+
+# Prepare unique OAuth Keys body
 prepare_unique_ops(parse_files.OAuthKeysEnv, parse_files.OAuthKeysArt, 'OAuthKeys')
 
+# Prepare unique Virtual Hosts artifact call body
 prepare_unique_ops(parse_files.virtualHostsEnv, parse_files.virtualHostsArt, 'virtualHosts')
 
-prepare_unique_ops(parse_files.authSessionsEnv, parse_files.authSessionsArt, 'authSessions')
-
+# Prepare unique Redirect Validation artifact call body
 prepare_unique_ops(parse_files.redirectValidationEnv, parse_files.redirectValidationArt, 'redirectValidation')
 
 #Last one needs some evaluation
