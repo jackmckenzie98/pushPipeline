@@ -44,10 +44,10 @@ session.verify = False
 
 def execute_calls():
     #PUTs and POSTs have the same key values in the same order, so we can iterate this way
-    for key, val in prepare_operation_bodies.PUT_Bodies.items():
-        #Run POST operations then PUTs
-        print(f'\n\n\n\nOperations running now on {key}...\n')
-        try:
+    try:
+        for key, val in prepare_operation_bodies.PUT_Bodies.items():
+            #Run POST operations then PUTs
+            print(f'\n\n\n\nOperations running now on {key}...\n')
             for i in range(0, len(prepare_operation_bodies.POST_Bodies[key])):
                 json_body = json.loads(json.dumps(prepare_operation_bodies.POST_Bodies[key][i]))
                 response = session.post(url=f'{url}{endpoints[key]}', json=json_body)
@@ -69,8 +69,10 @@ def execute_calls():
                     print(f'Response code for PUT to {url}{endpoints[key]} is'
                           f' {response.status_code} with the following JSON:\n {json_body}\n')
                     print(f'Response body is as follows:\n {response.content}\n\n\n')
-        except requests.exceptions.RequestException as e:
-            print('Unexpected result code for: ', e)
+    except requests.exceptions.RequestException as e:
+        print(f'An error occurred during the HTTP request: {e}')
+    except Exception as e:
+        print(f'Unexpected error occured {e}')
 
 execute_calls()
 
