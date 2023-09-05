@@ -12,7 +12,11 @@ PUT_IDs = {"dataStores": [],
            "passwordCredentialValidators": [],
            "spConnections": [],
            "clients": [],
-           "keyPairs": []
+           "keyPairs": [],
+           "OAuthKeys": [],
+           "virtualHosts": [],
+           "authSessions": [],
+           "redirectValidation": []
            }
 PUT_Bodies = {"dataStores": [],
               "accessTokenManagers": [],
@@ -24,7 +28,11 @@ PUT_Bodies = {"dataStores": [],
               "passwordCredentialValidators": [],
               "spConnections": [],
               "clients": [],
-              "keyPairs": []
+              "keyPairs": [],
+              "OAuthKeys": [],
+              "virtualHosts": [],
+              "authSessions": [],
+              "redirectValidation": []
               }
 POST_Bodies = {"dataStores": [],
                "accessTokenManagers": [],
@@ -36,7 +44,11 @@ POST_Bodies = {"dataStores": [],
                "passwordCredentialValidators": [],
                "spConnections": [],
                "clients": [],
-               "keyPairs": []
+               "keyPairs": [],
+               "OAuthKeys": [],
+               "virtualHosts": [],
+               "authSessions": [],
+               "redirectValidation": []
                }
 
 #Special case to format the key pair operations as they won't exist at first

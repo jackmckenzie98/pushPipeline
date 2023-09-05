@@ -66,9 +66,14 @@ def call_existing_environment():
     existing_authPolicyContracts = session.get(f'{MIGRATE_TO}/pf-admin-api/v1/authenticationPolicyContracts').json()
     existing_dataStores = session.get(f'{MIGRATE_TO}/pf-admin-api/v1/dataStores').json()
     existing_keyPairs = session.get(f'{MIGRATE_TO}/pf-admin-api/v1/keyPairs/signing').json()
-    return [existing_clients, existing_authPols, existing_authPolFragments, existing_idpAdapters, existing_spConns, existing_PCVs, \
-        existing_accessTokenManagers, existing_accessTokenMappings, existing_authPolicyContracts, \
-        existing_dataStores, existing_keyPairs]
+    existing_OAuthKeys = session.get(f'{MIGRATE_TO}/pf-admin-api/v1/keyPairs/oauthOpenIdConnect').json()
+    existing_virtualHosts = session.get(f'{MIGRATE_TO}/pf-admin-api/v1/virtualHostNames').json()
+    existing_authSessions = session.get(f'{MIGRATE_TO}/pf-admin-api/v1/session/authenticationSessionPolicies').json()
+    existing_redirectValidation = session.get(f'{MIGRATE_TO}/pf-admin-api/v1/redirectValidation').json()
+    return [existing_clients, existing_authPols, existing_authPolFragments, existing_idpAdapters, existing_spConns,
+            existing_PCVs, existing_accessTokenManagers, existing_accessTokenMappings, existing_authPolicyContracts,
+            existing_dataStores, existing_keyPairs, existing_OAuthKeys, existing_virtualHosts, existing_authSessions,
+            existing_redirectValidation]
 
 def ingest_artifacts():
     clientsArt = json.load(open(os.path.join(ARTIFACTS_PATH, r'clients.json')))
@@ -82,8 +87,13 @@ def ingest_artifacts():
     authPolicyContractsArt = json.load(open(os.path.join(ARTIFACTS_PATH, r'authPolicyContracts.json')))
     dataStoresArt = json.load(open(os.path.join(ARTIFACTS_PATH, r'dataStores.json')))
     keyPairsArt = json.load(open(os.path.join(ARTIFACTS_PATH, r'keyPairs.json')))
-    return clientsArt, authPoliciesArt, authPolFragmentsArt, idpAdaptersArt, spConnectionsArt, passwordCredentialValidatorsArt, \
-        accessTokenManagersArt, accessTokenMappingsArt, authPolicyContractsArt, dataStoresArt, keyPairsArt
+    oauthKeysArt = json.load(open(os.path.join(ARTIFACTS_PATH, r'OAuthKeys.json')))
+    virtualHostsArt = json.load(open(os.path.join(ARTIFACTS_PATH, r'virtualHosts.json')))
+    authSessionsArt = json.load(open(os.path.join(ARTIFACTS_PATH, r'authSessions.json')))
+    redirectValidationArt = json.load(open(os.path.join(ARTIFACTS_PATH, r'redirectValidation.json')))
+    return clientsArt, authPoliciesArt, authPolFragmentsArt, idpAdaptersArt, spConnectionsArt, \
+        passwordCredentialValidatorsArt, accessTokenManagersArt, accessTokenMappingsArt, authPolicyContractsArt,\
+        dataStoresArt, keyPairsArt, oauthKeysArt, virtualHostsArt, authSessionsArt, redirectValidationArt
 
 def intake_env_files():
     clientsEnv = json.load(open(os.path.join(ENV_FILES, r'clients.json')))
@@ -96,8 +106,13 @@ def intake_env_files():
     accessTokenMappingsEnv = json.load(open(os.path.join(ENV_FILES, r'accessTokenMappings.json')))
     authPolicyContractsEnv = json.load(open(os.path.join(ENV_FILES, r'authPolicyContracts.json')))
     dataStoresEnv = json.load(open(os.path.join(ENV_FILES, r'dataStores.json')))
+    OAuthKeysEnv = json.load(open.os.path.join(ENV_FILES, r'OAuthKeys.json'))
+    virtualHostsEnv = json.load(open.os.path.join(ENV_FILES, r'virtualHosts.json'))
+    authSessionsEnv = json.load(open.os.path.join(ENV_FILES, r'authSessions.json'))
+    redirectValidationEnv = json.load(open.os.path.join(ENV_FILES, r'redirectValidation.json'))
     return clientsEnv, authPolEnv, authPolFragmentsEnv, idpAdaptersEnv, spConnEnv, PCVEnv, accessTokenManagersEnv,\
-        accessTokenMappingsEnv, authPolicyContractsEnv, dataStoresEnv
+        accessTokenMappingsEnv, authPolicyContractsEnv, dataStoresEnv, OAuthKeysEnv, virtualHostsEnv, authSessionsEnv,\
+        redirectValidationEnv
 
 def pull_certs():
     session = requests.Session()
@@ -119,18 +134,21 @@ def pull_certs():
         f.close()
 
 
-clientsArt, authPolsArt, authPolFragmentsArt, idpAdaptersArt, spConnsArt, passwordCredentialValidatorsArt, accessTokenManagersArt, \
-    accessTokenMappingsArt, authPolicyContractsArt, dataStoresArt, keyPairsArt = ingest_artifacts()
+clientsArt, authPolsArt, authPolFragmentsArt, idpAdaptersArt, spConnsArt, passwordCredentialValidatorsArt,\
+    accessTokenManagersArt, accessTokenMappingsArt, authPolicyContractsArt, dataStoresArt, keyPairsArt, OAuthKeysArt,\
+    virtualHostsArt, authSessionsArt, redirectValidationArt = ingest_artifacts()
 
-clientsEnv, authPolsEnv, authPolFragmentsEnv, idpAdaptersEnv, spConnEnv, PCVEnv, accessTokenManagersEnv, accessTokenMappingsEnv, \
-    authPolicyContractsEnv, dataStoresEnv = intake_env_files()
+clientsEnv, authPolsEnv, authPolFragmentsEnv, idpAdaptersEnv, spConnEnv, PCVEnv, accessTokenManagersEnv,\
+    accessTokenMappingsEnv, authPolicyContractsEnv, dataStoresEnv, OAuthKeysEnv, virtualHostsEnv, authSessionsEnv,\
+    redirectValidationEnv = intake_env_files()
 
-existingClients, existingAuthPols, existingAuthPolFragments, existingIDPAdapters, existingSPConns, existingPCVs, existingAccessTokenManagers,\
-    existingAccessTokenMappings, existing_authPolicyContracts, existingDataStores, existingKeyPairs\
+existingClients, existingAuthPols, existingAuthPolFragments, existingIDPAdapters, existingSPConns, existingPCVs,\
+    existingAccessTokenManagers, existingAccessTokenMappings, existing_authPolicyContracts, existingDataStores,\
+    existingKeyPairs, existingOAuthKeys, existingVirtualHosts, existingAuthSessions, existingRedirectValidation\
     = format_object(call_existing_environment())
 
 
 if __name__ == '__main__':
     pull_certs()
     print('File parsing script has been completed')
-    print(f'\n\n{existingAccessTokenMappings}')
+    print(f'\n\n{existingRedirectValidation}')
