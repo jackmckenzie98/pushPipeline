@@ -138,7 +138,17 @@ def prepare_operations(entity_type, existing_data, art_data, id_key, data_key, s
                 PUT_Bodies[data_key][j] = inject_secret_values(PUT_Bodies[data_key][j], "encryptedValue", "value",
                                                                parse_files.get_secret(secret_key)[secret_key])
 
-
+#Prepare operations that don't have an identifier for the objects within, or structured oddly
+def prepare_unique_ops(entity_type, art_data, data_key, secret_key=None):
+    env_inject = entity_type['example']['location']
+    if data_key != 'authSessions':
+        for item in art_data['items']:
+            item = replace_location_recursive(item, parse_files.MIGRATE_FROM, env_inject)
+            PUT_Bodies[data_key].append(item)
+    else:
+        for item in art_data['items']:
+            item = replace_location_recursive(item, parse_files.MIGRATE_FROM, env_inject)
+            POST_Bodies[data_key].append(item)
 # Prepare the PCV data structures
 prepare_operations(parse_files.PCVEnv, parse_files.existingPCVs, parse_files.passwordCredentialValidatorsArt, "id",
                    "passwordCredentialValidators", os.environ.get("PCV_PASS"))
@@ -188,6 +198,14 @@ prepare_operations(parse_files.authSessionsEnv, parse_files.existingAuthSessions
 
 prepare_operations(parse_files.redirectValidationEnv, parse_files.existingRedirectValidation,
                    parse_files.redirectValidationArt, 'redirectValidationLocalSettings', 'redirectValidation')
+
+prepare_unique_ops(parse_files.OAuthKeysEnv, parse_files.OAuthKeysArt, 'OAuthKeys')
+
+prepare_unique_ops(parse_files.virtualHostsEnv, parse_files.virtualHostsArt, 'virtualHosts')
+
+prepare_unique_ops(parse_files.authSessionsEnv, parse_files.authSessionsArt, 'authSessions')
+
+prepare_unique_ops(parse_files.redirectValidationEnv, parse_files.redirectValidationArt, 'redirectValidation')
 
 #Last one needs some evaluation
 prepare_keyPair_operations()
