@@ -149,6 +149,7 @@ def prepare_unique_ops(entity_type, art_data, data_key, secret_key=None):
         for item in art_data['items']:
             item = replace_location_recursive(item, parse_files.MIGRATE_FROM, env_inject)
             POST_Bodies[data_key].append(item)
+
 # Prepare the PCV data structures
 prepare_operations(parse_files.PCVEnv, parse_files.existingPCVs, parse_files.passwordCredentialValidatorsArt, "id",
                    "passwordCredentialValidators", os.environ.get("PCV_PASS"))
