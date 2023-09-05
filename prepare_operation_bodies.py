@@ -187,18 +187,6 @@ prepare_operations(parse_files.authPolFragmentsEnv, parse_files.existingAuthPolF
 prepare_operations(parse_files.authPolsEnv, parse_files.existingAuthPols, parse_files.authPolsArt,
                    'id', 'authPolicies')
 
-prepare_operations(parse_files.OAuthKeysEnv, parse_files.existingOAuthKeys, parse_files.OAuthKeysArt,
-                   'rsaActiveCertRef', 'OAuthKeys')
-
-prepare_operations(parse_files.virtualHostsEnv, parse_files.existingVirtualHosts, parse_files.virtualHostsArt,
-                   'virtualHostNames', 'virtualHosts')
-
-prepare_operations(parse_files.authSessionsEnv, parse_files.existingAuthSessions, parse_files.authSessionsArt, 'id',
-                   'authSessions')
-
-prepare_operations(parse_files.redirectValidationEnv, parse_files.existingRedirectValidation,
-                   parse_files.redirectValidationArt, 'redirectValidationLocalSettings', 'redirectValidation')
-
 prepare_unique_ops(parse_files.OAuthKeysEnv, parse_files.OAuthKeysArt, 'OAuthKeys')
 
 prepare_unique_ops(parse_files.virtualHostsEnv, parse_files.virtualHostsArt, 'virtualHosts')
