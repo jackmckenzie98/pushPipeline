@@ -106,10 +106,10 @@ def intake_env_files():
     accessTokenMappingsEnv = json.load(open(os.path.join(ENV_FILES, r'accessTokenMappings.json')))
     authPolicyContractsEnv = json.load(open(os.path.join(ENV_FILES, r'authPolicyContracts.json')))
     dataStoresEnv = json.load(open(os.path.join(ENV_FILES, r'dataStores.json')))
-    OAuthKeysEnv = json.load(open.os.path.join(ENV_FILES, r'OAuthKeys.json'))
-    virtualHostsEnv = json.load(open.os.path.join(ENV_FILES, r'virtualHosts.json'))
-    authSessionsEnv = json.load(open.os.path.join(ENV_FILES, r'authSessions.json'))
-    redirectValidationEnv = json.load(open.os.path.join(ENV_FILES, r'redirectValidation.json'))
+    OAuthKeysEnv = json.load(open(os.path.join(ENV_FILES, r'OAuthKeys.json')))
+    virtualHostsEnv = json.load(open(os.path.join(ENV_FILES, r'virtualHosts.json')))
+    authSessionsEnv = json.load(open(os.path.join(ENV_FILES, r'authSessions.json')))
+    redirectValidationEnv = json.load(open(os.path.join(ENV_FILES, r'redirectValidation.json')))
     return clientsEnv, authPolEnv, authPolFragmentsEnv, idpAdaptersEnv, spConnEnv, PCVEnv, accessTokenManagersEnv,\
         accessTokenMappingsEnv, authPolicyContractsEnv, dataStoresEnv, OAuthKeysEnv, virtualHostsEnv, authSessionsEnv,\
         redirectValidationEnv
