@@ -53,7 +53,7 @@ def execute_calls():
             print(f'Response code for POST to {url}{endpoints[key]} is {response.status_code} for call'
                   f' made with following JSON:\n {json_body}\n')
             print(f'Response body is as follows:\n {response.content}\n\n\n')
-        if key not in ('authPolicies', 'OAuthKeys', 'virtualHosts', 'authSessions', 'redirectValidation'):
+        if key not in ('authPolicies', 'OAuthKeys', 'virtualHosts', 'redirectValidation'):
             for i in range(0, len(prepare_operation_bodies.PUT_Bodies[key])):
                 json_body = json.loads(json.dumps(prepare_operation_bodies.PUT_Bodies[key][i]))
                 response = session.put(url=f'{url}{endpoints[key]}/{prepare_operation_bodies.PUT_IDs[key][i]}',
