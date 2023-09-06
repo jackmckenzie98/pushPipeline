@@ -73,6 +73,7 @@ def execute_calls():
                     json_body = json.loads(json.dumps(prepare_operation_bodies.PUT_Bodies[key][j]))
                     response = session.put(url=f'{url}{endpoints[key]}', json=json_body)
                     if not response.ok:
+                        print(f'Response body is as follows:\n {response.content}\n\n\n')
                         raise Exception(f'HTTP Error: {response.status_code} - {response.reason}')
                     else:
                         print(f'Response code for PUT to {url}{endpoints[key]} is'
