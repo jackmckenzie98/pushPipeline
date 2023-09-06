@@ -52,6 +52,7 @@ def execute_calls():
                 json_body = json.loads(json.dumps(prepare_operation_bodies.POST_Bodies[key][i]))
                 response = session.post(url=f'{url}{endpoints[key]}', json=json_body)
                 if not response.ok and key != 'dataStores':
+                    print(f'Request body: {response.request.body}')
                     print(response.url)
                     print(f'\n\nResponse body is as follows:\n {response.content}\n\n\n')
                     raise Exception(f'HTTP Error: {response.status_code} - {response.reason}')
@@ -65,6 +66,7 @@ def execute_calls():
                     response = session.put(url=f'{url}{endpoints[key]}/{prepare_operation_bodies.PUT_IDs[key][i]}',
                                            json=json_body)
                     if not response.ok and key != 'dataStores':
+                        print(f'Request body: {response.request.body}')
                         print(response.url)
                         print(f'\n\nResponse body is as follows:\n {response.content}\n\n\n')
                         raise Exception(f'HTTP Error: {response.status_code} - {response.reason}')
@@ -77,6 +79,7 @@ def execute_calls():
                     json_body = json.loads(json.dumps(prepare_operation_bodies.PUT_Bodies[key][j]))
                     response = session.put(url=f'{url}{endpoints[key]}', json=json_body)
                     if not response.ok and key != 'dataStores':
+                        print(f'Request body: {response.request.body}\n\n' )
                         print(response.url)
                         print(f'\n\nResponse body is as follows:\n {response.content}\n\n\n')
                         raise Exception(f'HTTP Error: {response.status_code} - {response.reason}')
