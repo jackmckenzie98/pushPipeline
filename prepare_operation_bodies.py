@@ -174,7 +174,7 @@ prepare_operations(parse_files.dataStoresEnv, parse_files.existingDataStores, pa
 
 # Prepare IDP Adapters structures
 prepare_operations(parse_files.idpAdaptersEnv, parse_files.existingIDPAdapters, parse_files.idpAdaptersArt, 'id',
-                   'idpAdapters')
+                   'idpAdapters', os.environ.get('ADAPTER_PASS'))
 
 # Prepare Auth Policy Contracts structures
 prepare_operations(parse_files.authPolicyContractsEnv, parse_files.existing_authPolicyContracts,
